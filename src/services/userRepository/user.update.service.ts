@@ -8,6 +8,7 @@ const userUpdateServices = async ({
   name,
   last_name,
   email,
+  admin,
   password,
   id,
 }: IUserUpdate) => {
@@ -17,9 +18,10 @@ const userUpdateServices = async ({
 
   if (!user) throw new AppError(401, "User not found");
 
-  user.name = name || user.name;
-  user.last_name = last_name || user.last_name;
-  user.email = email || user.email;
+  user.name = name;
+  user.last_name = last_name;
+  user.email = email;
+  user.admin = admin;
   password
     ? (user.password = bcrypt.hashSync(password, 8))
     : (user.password = user.password);
@@ -27,6 +29,7 @@ const userUpdateServices = async ({
   user.updated_at = new Date();
 
   await userRepository.save(user);
+
   delete user.password;
 
   return user;
