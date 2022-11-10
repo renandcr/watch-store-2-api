@@ -2,6 +2,7 @@ export interface IUserCreate {
   name: string;
   last_name: string;
   email: string;
+  admin: boolean;
   password: string;
 }
 
@@ -13,6 +14,7 @@ export interface IUserReturn {
   name: string;
   last_name: string;
   email: string;
+  admin: boolean;
   password?: string;
   created_at: Date;
   updated_at: Date;

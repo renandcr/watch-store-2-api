@@ -8,8 +8,14 @@ import { Request, Response } from "express";
 
 class UserController {
   static async create(req: Request, res: Response) {
-    const { name, last_name, email, password } = req.body;
-    const user = await createUserService({ name, last_name, email, password });
+    const { name, last_name, email, admin, password } = req.body;
+    const user = await createUserService({
+      name,
+      last_name,
+      email,
+      admin,
+      password,
+    });
 
     return res.status(201).json(user);
   }
@@ -32,13 +38,15 @@ class UserController {
 
     return res.json(user);
   }
+
   static async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, last_name, email, password } = req.body;
+    const { name, last_name, email, admin, password } = req.body;
     const user = await userUpdateServices({
       name,
       last_name,
       email,
+      admin,
       password,
       id,
     });

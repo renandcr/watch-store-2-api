@@ -18,7 +18,7 @@ const UserLoginService = async ({ email, password }: IUserLogin) => {
   if (!checkPassword) throw new AppError(401, "Invalid email or password");
 
   const token = jwt.sign(
-    { email: email, id: user!.id },
+    { email: email, id_token: user!.id },
     <string>process.env.SECRET_KEY,
     {
       expiresIn: "24h",
