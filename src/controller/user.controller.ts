@@ -1,9 +1,9 @@
-import userProfileService from "../../services/userRepository/user.profile.service";
-import userUpdateServices from "../../services/userRepository/user.update.service";
-import createUserService from "../../services/userRepository/user.create.service";
-import userDeleteService from "../../services/userRepository/user.delete.service";
-import UserLoginService from "../../services/userRepository/user.login.service";
-import userListService from "../../services/userRepository/user.list.service";
+import userProfileService from "../services/userRepository/user.profile.service";
+import userUpdateServices from "../services/userRepository/user.update.service";
+import createUserService from "../services/userRepository/user.create.service";
+import userDeleteService from "../services/userRepository/user.delete.service";
+import UserLoginService from "../services/userRepository/user.login.service";
+import userListService from "../services/userRepository/user.list.service";
 import { Request, Response } from "express";
 
 class UserController {
