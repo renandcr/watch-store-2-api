@@ -1,7 +1,7 @@
 import { IUserReturn, IUserUpdate } from "../../interfaces/user.interface";
 import { AppDataSource } from "../../data-source";
-import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors/appError";
+import User from "../../entities/user.entity";
 import bcrypt from "bcrypt";
 
 const userUpdateServices = async ({
@@ -16,7 +16,7 @@ const userUpdateServices = async ({
   const users = await userRepository.find();
   const user: IUserReturn | undefined = users.find((user) => user.id === id);
 
-  if (!user) throw new AppError(401, "User not found");
+  if (!user) throw new AppError(404, "User not found");
 
   user.name = name;
   user.last_name = last_name;

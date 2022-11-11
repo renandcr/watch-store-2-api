@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import Address from "./address.entity";
 
 @Entity()
-export class User {
+class User {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
@@ -25,4 +26,11 @@ export class User {
 
   @Column("timestamp")
   updated_at: Date;
+
+  @OneToMany((type) => Address, (address) => address.user, {
+    eager: true,
+  })
+  addresses: Address[];
 }
+
+export default User;

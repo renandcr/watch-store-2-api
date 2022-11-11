@@ -1,15 +1,8 @@
-import { User } from "./user.entity";
-
-import {
-  PrimaryGeneratedColumn,
-  JoinColumn,
-  OneToOne,
-  Column,
-  Entity,
-} from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from "typeorm";
+import User from "./user.entity";
 
 @Entity()
-export class Address {
+class Address {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
@@ -37,7 +30,10 @@ export class Address {
   @Column("timestamp")
   updated_at: Date;
 
-  @OneToOne((type) => User)
-  @JoinColumn()
+  @ManyToOne((type) => User, (user) => user.addresses, {
+    onDelete: "CASCADE",
+  })
   user: User;
 }
+
+export default Address;
