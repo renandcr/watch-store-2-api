@@ -3,7 +3,9 @@ import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import User from "../../entities/user.entity";
 
-const userProfileService = async ({ id }: IUserProfile) => {
+const userProfileService = async ({
+  id,
+}: IUserProfile): Promise<IUserReturn> => {
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
   const user: IUserReturn | undefined = users.find((user) => user.id === id);

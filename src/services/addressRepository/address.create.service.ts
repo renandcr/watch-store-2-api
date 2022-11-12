@@ -5,20 +5,14 @@ import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import User from "../../entities/user.entity";
 
-const addressCreateService = async ({
-  street,
-  district,
-  city,
-  state,
-  zip_code,
-  phone,
-  id,
-}: IAddress) => {
+const addressCreateService = async (
+  data: IAddress
+): Promise<IAddressReturn> => {
   const addressRepository = AppDataSource.getRepository(Address);
 
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
-  const user = users.find((user) => user.id === id);
+  const user = users.find((user) => user.id === data.id);
 
   if (!user)
     throw new AppError(
@@ -27,12 +21,12 @@ const addressCreateService = async ({
     );
 
   const address: IAddressReturn = new Address();
-  address.street = street;
-  address.district = district;
-  address.city = city;
-  address.state = state.toUpperCase();
-  address.zip_code = zip_code;
-  address.phone = phone;
+  address.street = data.street;
+  address.district = data.district;
+  address.city = data.city;
+  address.state = data.state.toUpperCase();
+  address.zip_code = data.zip_code;
+  address.phone = data.phone;
   address.created_at = new Date();
   address.updated_at = new Date();
   address.user = <IAddressRelatedUser>user;

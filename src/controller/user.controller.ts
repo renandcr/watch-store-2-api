@@ -4,30 +4,33 @@ import createUserService from "../services/userRepository/user.create.service";
 import userDeleteService from "../services/userRepository/user.delete.service";
 import UserLoginService from "../services/userRepository/user.login.service";
 import userListService from "../services/userRepository/user.list.service";
+import { IUserCreate } from "../interfaces/user.interface";
+import { IUserUpdate } from "../interfaces/user.interface";
+import { IUserLogin } from "../interfaces/user.interface";
 import { Request, Response } from "express";
 
 class UserController {
   static async create(req: Request, res: Response) {
-    const { name, last_name, email, admin, password } = req.body;
+    const { name, last_name, email, password, admin }: IUserCreate = req.body;
     const user = await createUserService({
       name,
       last_name,
       email,
-      admin,
       password,
+      admin,
     });
 
     return res.status(201).json(user);
   }
 
   static async login(req: Request, res: Response) {
-    const { email, password } = req.body;
+    const { email, password }: IUserLogin = req.body;
     const token = await UserLoginService({ email, password });
 
     return res.json({ token: token });
   }
 
-  static async list(req: Request, res: Response) {
+  static async list(_: Request, res: Response) {
     const users = await userListService();
     return res.json(users);
   }
@@ -41,13 +44,13 @@ class UserController {
 
   static async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, last_name, email, admin, password } = req.body;
+    const { name, last_name, email, password, admin }: IUserCreate = req.body;
     const user = await userUpdateServices({
       name,
       last_name,
       email,
-      admin,
       password,
+      admin,
       id,
     });
 

@@ -1,11 +1,13 @@
 import addressCreateService from "../services/addressRepository/address.create.service";
 import addressUpdateService from "../services/addressRepository/address.update.service";
 import addressDeleteService from "../services/addressRepository/address.delete.service";
+import { IAddress } from "../interfaces/address.interface";
 import { Request, Response } from "express";
 
 class AddressController {
   static async create(req: Request, res: Response) {
-    const { street, district, city, state, zip_code, phone } = req.body;
+    const { street, district, city, state, zip_code, phone }: IAddress =
+      req.body;
     const { id } = req.params;
 
     const address = await addressCreateService({
@@ -22,7 +24,8 @@ class AddressController {
   }
 
   static async update(req: Request, res: Response) {
-    const { street, district, city, state, zip_code, phone } = req.body;
+    const { street, district, city, state, zip_code, phone }: IAddress =
+      req.body;
     const { id } = req.params;
 
     const address = await addressUpdateService({

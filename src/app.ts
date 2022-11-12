@@ -3,10 +3,12 @@ import { Request, Response } from "express";
 import appRoutes from "./routes";
 import express from "express";
 import "express-async-errors";
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
-const port = 3000;
+const port = 3333;
 appRoutes(app);
 app.use(errorMiddleware);
 

@@ -3,7 +3,7 @@ import Address from "../../entities/address.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 
-const addressDeleteService = async ({ id }: IAddressDelete) => {
+const addressDeleteService = async ({ id }: IAddressDelete): Promise<void> => {
   const addressRepository = AppDataSource.getRepository(Address);
   const addresses = await addressRepository.find();
   const address = addresses.find((address) => address.id === id);
