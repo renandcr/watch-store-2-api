@@ -6,13 +6,15 @@ import "express-async-errors";
 const cors = require("cors");
 
 const app = express();
+const port = 3333;
+
+app.use("/watch_store/product", express.static("src/uploads"));
 app.use(cors());
 app.use(express.json());
-const port = 3333;
 appRoutes(app);
 app.use(errorMiddleware);
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (_: Request, res: Response) => {
   res.send("Api Watch Store 2 running!");
 });
 

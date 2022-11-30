@@ -6,39 +6,68 @@ import { Request, Response } from "express";
 
 class AddressController {
   static async create(req: Request, res: Response) {
-    const { street, district, city, state, zip_code, phone }: IAddress =
-      req.body;
+    const {
+      street,
+      district,
+      house_number,
+      complement,
+      city,
+      state,
+      zip_code,
+      phone,
+      main,
+    }: IAddress = req.body;
     const { id } = req.params;
 
     const address = await addressCreateService({
       street,
       district,
+      house_number,
+      complement,
       city,
       state,
       zip_code,
       phone,
+      main,
       id,
     });
 
-    return res.status(201).json(address);
+    return res
+      .status(201)
+      .json({ address: address, message: "Endereço cadastrado com sucesso" });
   }
 
   static async update(req: Request, res: Response) {
-    const { street, district, city, state, zip_code, phone }: IAddress =
-      req.body;
+    const {
+      street,
+      district,
+      house_number,
+      complement,
+      city,
+      state,
+      zip_code,
+      phone,
+      main,
+    }: IAddress = req.body;
     const { id } = req.params;
 
     const address = await addressUpdateService({
       street,
       district,
+      house_number,
+      complement,
       city,
       state,
       zip_code,
       phone,
+      main,
       id,
     });
 
-    return res.json(address);
+    return res.json({
+      address: address,
+      message: "Endereço atualizado com sucesso",
+    });
   }
 
   static async delete(req: Request, res: Response) {

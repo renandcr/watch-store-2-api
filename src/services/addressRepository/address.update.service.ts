@@ -7,21 +7,40 @@ const addressUpdateService = async (
   data: IAddress
 ): Promise<IAddressReturn> => {
   const addressRepository = AppDataSource.getRepository(Address);
-  const addresses = await addressRepository.find();
-  const address = addresses.find((address) => address.id === data.id);
+  const usersRepository = await addressRepository.find({
+    relations: {
+      user: true,
+    },
+  });
 
-  if (!address) throw new AppError(404, "Address not found");
+  const possibleAddress = usersRepository.find(
+    (address) => address.id === data.id
+  );
 
+  if (!possibleAddress) throw new AppError(404, "Address not found");
+
+  possibleAddress?.user.addresses.map(async (address) => {
+    if (address.id !== data.id) {
+      address.main = false;
+      await addressRepository.save(address);
+    }
+  });
+
+  const address: IAddressReturn = possibleAddress;
   address.street = data.street;
   address.district = data.district;
+  address.house_number = data.house_number;
+  address.complement = data.complement;
   address.city = data.city;
   address.state = data.state;
   address.zip_code = data.zip_code;
   address.phone = data.phone;
+  address.main = true;
   address.created_at = address.created_at;
   address.updated_at = new Date();
 
   await addressRepository.save(address);
+  delete address.user;
 
   return address;
 };

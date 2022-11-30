@@ -6,13 +6,19 @@ class Address {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  @Column({ type: "varchar", length: 150 })
+  @Column({ type: "varchar", length: 50 })
   street: string;
 
-  @Column({ type: "varchar", length: 150 })
+  @Column({ type: "varchar", length: 50 })
   district: string;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: "varchar", length: 10 })
+  house_number: string;
+
+  @Column({ type: "varchar", length: 50, default: null })
+  complement: string;
+
+  @Column({ type: "varchar", length: 50 })
   city: string;
 
   @Column({ type: "varchar", length: 2 })
@@ -24,13 +30,16 @@ class Address {
   @Column({ type: "varchar", length: 14 })
   phone: string;
 
-  @Column("timestamp")
+  @Column({ type: "boolean", default: false })
+  main: boolean;
+
+  @Column({ type: "timestamp" })
   created_at: Date;
 
-  @Column("timestamp")
+  @Column({ type: "timestamp" })
   updated_at: Date;
 
-  @ManyToOne((type) => User, (user) => user.addresses, {
+  @ManyToOne(() => User, (user) => user.addresses, {
     onDelete: "CASCADE",
   })
   user: User;
