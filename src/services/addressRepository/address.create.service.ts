@@ -9,7 +9,6 @@ const addressCreateService = async (
   data: IAddress
 ): Promise<IAddressReturn> => {
   const addressRepository = AppDataSource.getRepository(Address);
-
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
   const user = users.find((user) => user.id === data.id);
@@ -20,13 +19,23 @@ const addressCreateService = async (
       "User not found. Address cannot be assigned to a non-existent user"
     );
 
+  if (user.addresses.length) {
+    user.addresses.map(async (address) => {
+      address.main = false;
+      await addressRepository.save(address);
+    });
+  }
+
   const address: IAddressReturn = new Address();
   address.street = data.street;
   address.district = data.district;
+  address.house_number = data.house_number;
+  address.complement = data.complement;
   address.city = data.city;
   address.state = data.state.toUpperCase();
   address.zip_code = data.zip_code;
   address.phone = data.phone;
+  address.main = true;
   address.created_at = new Date();
   address.updated_at = new Date();
   address.user = <IAddressRelatedUser>user;

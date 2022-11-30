@@ -1,5 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import Address from "./address.entity";
+import Cart from "./cart.entity";
+
+import {
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  Column,
+  Entity,
+} from "typeorm";
 
 @Entity()
 class User {
@@ -9,25 +18,31 @@ class User {
   @Column({ type: "varchar", length: 50 })
   name: string;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: "varchar", length: 50 })
   last_name: string;
 
-  @Column({ type: "varchar", length: 100 })
+  @Column({ type: "varchar", length: 75 })
   email: string;
 
   @Column({ type: "boolean", default: false })
   admin: boolean;
 
-  @Column({ type: "varchar" })
+  @Column({ type: "varchar", length: 100 })
   password: string;
 
-  @Column("timestamp")
+  @Column({ type: "timestamp" })
   created_at: Date;
 
-  @Column("timestamp")
+  @Column({ type: "timestamp" })
   updated_at: Date;
 
-  @OneToMany((type) => Address, (address) => address.user, {
+  @OneToOne(() => Cart, {
+    eager: true,
+  })
+  @JoinColumn()
+  cart: Cart;
+
+  @OneToMany(() => Address, (address) => address.user, {
     eager: true,
   })
   addresses: Address[];

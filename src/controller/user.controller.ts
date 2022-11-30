@@ -5,7 +5,6 @@ import userDeleteService from "../services/userRepository/user.delete.service";
 import UserLoginService from "../services/userRepository/user.login.service";
 import userListService from "../services/userRepository/user.list.service";
 import { IUserCreate } from "../interfaces/user.interface";
-import { IUserUpdate } from "../interfaces/user.interface";
 import { IUserLogin } from "../interfaces/user.interface";
 import { Request, Response } from "express";
 
@@ -37,6 +36,7 @@ class UserController {
 
   static async profile(req: Request, res: Response) {
     const { id } = req.params;
+
     const user = await userProfileService({ id });
 
     return res.json(user);
@@ -61,7 +61,7 @@ class UserController {
     const { id } = req.params;
     await userDeleteService({ id });
 
-    return res.status(204).json();
+    return res.json({ message: "Endereço deletado com sucesso" });
   }
 }
 
