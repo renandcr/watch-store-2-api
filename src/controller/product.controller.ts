@@ -13,22 +13,24 @@ class ProductController {
       description,
       price,
       stock_quantity,
+      purchase_units,
       category,
       genre,
-    } = req.body;
+    }: IProduct = req.body;
     const product = await productCreateService({
       img,
       reference,
       description,
       price,
       stock_quantity,
+      purchase_units,
       category,
       genre,
     });
 
     return res
       .status(201)
-      .json({ message: "Produto criado com sucesso", data: product });
+      .json({ message: "Product created successfully", data: product });
   }
 
   static async list(_: Request, res: Response) {
@@ -45,6 +47,7 @@ class ProductController {
       description,
       price,
       stock_quantity,
+      purchase_units,
       category,
       genre,
     }: IProduct = req.body;
@@ -54,6 +57,7 @@ class ProductController {
       description,
       price,
       stock_quantity,
+      purchase_units,
       category,
       genre,
       id,
@@ -61,7 +65,7 @@ class ProductController {
 
     return res.json({
       data: product,
-      message: "Produto atualizado com sucesso",
+      message: "Product updated successfully",
     });
   }
 
@@ -69,7 +73,7 @@ class ProductController {
     const { id } = req.params;
     await productDeleteService({ id });
 
-    return res.json({ message: "Produto deletado com sucesso" });
+    return res.json({ message: "Product deleted successfully" });
   }
 }
 

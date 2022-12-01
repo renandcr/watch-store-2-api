@@ -20,6 +20,9 @@ class Product {
   @Column({ type: "integer" })
   stock_quantity: number;
 
+  @Column({ type: "integer", default: 1 })
+  purchase_units: number;
+
   @Column({ type: "varchar", length: 50 })
   category: string;
 

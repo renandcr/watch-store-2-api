@@ -1,15 +1,14 @@
-import { IProductReturn } from "../../interfaces/product.interface";
 import Product from "../../entities/product.entity";
 import { AppDataSource } from "../../data-source";
 
-const productListService = async (): Promise<Array<IProductReturn>> => {
+const productListService = async (): Promise<Array<Product>> => {
   const productsRepository = AppDataSource.getRepository(Product);
   const products = await productsRepository.find();
 
-  for (let item in products) {
+  for (let product in products) {
     products[
-      item
-    ].img = `http://localhost:3333/watch_store/product/${products[item].img}`;
+      product
+    ].img = `http://localhost:3333/watch_store/product/${products[product].img}`;
   }
 
   return products;

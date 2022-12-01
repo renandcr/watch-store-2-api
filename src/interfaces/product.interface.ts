@@ -4,6 +4,7 @@ export interface IProduct {
   description: string;
   price: number;
   stock_quantity: number;
+  purchase_units: number;
   category: string;
   genre: string;
 }
@@ -12,11 +13,6 @@ export interface IProductUpdate extends IProduct {
   id: string;
 }
 
-export interface IProductReturn extends IProductUpdate {
-  created_at: Date;
-  updated_at: Date;
-}
-
-export interface IProductChange {
+export interface IProductId {
   id: string;
 }

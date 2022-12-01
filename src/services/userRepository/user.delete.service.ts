@@ -1,9 +1,9 @@
-import { IUserProfile } from "../../interfaces/user.interface";
+import { IUserId } from "../../interfaces/user.interface";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import User from "../../entities/user.entity";
 
-const userDeleteService = async ({ id }: IUserProfile): Promise<void> => {
+const userDeleteService = async ({ id }: IUserId): Promise<void> => {
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
   const user = users.find((user) => user.id === id);

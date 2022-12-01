@@ -1,5 +1,3 @@
-import { IAddressCreateSave } from "../interfaces/address.interface";
-import { IUserDatabase } from "../interfaces/user.interface";
 import { Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../data-source";
 import { AppError } from "../errors/appError";
@@ -8,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 /*
 Administrador tem total liberdade para fazer alterações.
-Usuário pode alterar somente seu perfil e seu endereço.
+Usuário pode alterar somente seu perfil e endereço.
 */
 const verifyUserAuthentication = async (
   req: Request,
@@ -33,9 +31,11 @@ const verifyUserAuthentication = async (
   }
 
   const userRepository = AppDataSource.getRepository(User);
-  const user: IUserDatabase | any = await userRepository.findOneBy({
+  const user = await userRepository.findOneBy({
     id: loggedInUserId,
   });
+
+  if (!user) throw new AppError(500, "Internal server error");
 
   const isAddressRoute = req.originalUrl.replace(/[/]/gi, " ").split(" ");
 
@@ -46,10 +46,9 @@ const verifyUserAuthentication = async (
       throw new AppError(401, "Unauthorized permission");
     }
 
-    const addressIsCompatible: IAddressCreateSave | undefined =
-      user.addresses.find(
-        (address: IAddressCreateSave) => address.id === req.params["id"]
-      );
+    const addressIsCompatible = user.addresses.find(
+      (address) => address.id === req.params["id"]
+    );
 
     if (!addressIsCompatible) {
       throw new AppError(401, "Unauthorized permission");
