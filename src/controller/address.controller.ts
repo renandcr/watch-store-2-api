@@ -19,7 +19,7 @@ class AddressController {
     }: IAddress = req.body;
     const { id } = req.params;
 
-    const address = await addressCreateService({
+    await addressCreateService({
       street,
       district,
       house_number,
@@ -32,9 +32,7 @@ class AddressController {
       id,
     });
 
-    return res
-      .status(201)
-      .json({ address: address, message: "Endereço cadastrado com sucesso" });
+    return res.status(201).json({ message: "Successfully registered address" });
   }
 
   static async update(req: Request, res: Response) {
@@ -51,7 +49,7 @@ class AddressController {
     }: IAddress = req.body;
     const { id } = req.params;
 
-    const address = await addressUpdateService({
+    await addressUpdateService({
       street,
       district,
       house_number,
@@ -65,8 +63,7 @@ class AddressController {
     });
 
     return res.json({
-      address: address,
-      message: "Endereço atualizado com sucesso",
+      message: "Address updated successfully",
     });
   }
 

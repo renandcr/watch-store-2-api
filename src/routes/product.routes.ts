@@ -1,5 +1,5 @@
 import ProductController from "../controller/product.controller";
-import storage from "../config/multer";
+import { storage } from "../methods/index";
 import { Router } from "express";
 import multer from "multer";
 

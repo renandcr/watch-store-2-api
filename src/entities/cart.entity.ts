@@ -1,9 +1,7 @@
 import Product from "./product.entity";
-import User from "./user.entity";
 
 import {
   PrimaryGeneratedColumn,
-  JoinColumn,
   ManyToMany,
   JoinTable,
   Column,
@@ -16,10 +14,10 @@ class Cart {
   readonly id: string;
 
   @Column({ type: "integer" })
-  purchase_units: number;
+  total_units: number;
 
-  @JoinColumn()
-  user: User;
+  @Column({ type: "float" })
+  amount: number;
 
   @ManyToMany(() => Product, {
     onDelete: "CASCADE",

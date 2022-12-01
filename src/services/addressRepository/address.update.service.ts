@@ -1,11 +1,9 @@
-import { IAddress, IAddressReturn } from "../../interfaces/address.interface";
+import { IAddress } from "../../interfaces/address.interface";
 import Address from "../../entities/address.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 
-const addressUpdateService = async (
-  data: IAddress
-): Promise<IAddressReturn> => {
+const addressUpdateService = async (data: IAddress): Promise<void> => {
   const addressRepository = AppDataSource.getRepository(Address);
   const usersRepository = await addressRepository.find({
     relations: {
@@ -19,14 +17,14 @@ const addressUpdateService = async (
 
   if (!possibleAddress) throw new AppError(404, "Address not found");
 
-  possibleAddress?.user.addresses.map(async (address) => {
+  possibleAddress.user.addresses.map(async (address) => {
     if (address.id !== data.id) {
       address.main = false;
       await addressRepository.save(address);
     }
   });
 
-  const address: IAddressReturn = possibleAddress;
+  const address = possibleAddress;
   address.street = data.street;
   address.district = data.district;
   address.house_number = data.house_number;
@@ -40,9 +38,6 @@ const addressUpdateService = async (
   address.updated_at = new Date();
 
   await addressRepository.save(address);
-  delete address.user;
-
-  return address;
 };
 
 export default addressUpdateService;

@@ -1,6 +1,7 @@
-import { IAddressCreateSave } from "./address.interface";
+import Address from "../entities/address.entity";
+import Cart from "../entities/cart.entity";
 
-export interface IUserCreate {
+export interface IUser {
   name: string;
   last_name: string;
   email: string;
@@ -8,18 +9,12 @@ export interface IUserCreate {
   password: string;
 }
 
-export interface IAddressRelatedUser extends IUserCreate {
-  id: string;
-  created_at: Date;
-  updated_at: Date;
-  addresses: Array<IAddressCreateSave>;
-}
-
-export interface IUserUpdate extends IUserCreate {
+export interface IUserUpdate extends IUser {
   id: string;
 }
 
 export interface IUserReturn {
+  id: string;
   name: string;
   last_name: string;
   email: string;
@@ -27,6 +22,8 @@ export interface IUserReturn {
   password?: string;
   created_at: Date;
   updated_at: Date;
+  addresses: Array<Address>;
+  cart: Cart;
 }
 
 export interface IUserLogin {
@@ -34,12 +31,6 @@ export interface IUserLogin {
   password: string;
 }
 
-export interface IUserProfile {
+export interface IUserId {
   id: string;
-}
-
-export interface IUserDatabase extends IUserCreate {
-  id: string;
-  created_at: Date;
-  updated_at: Date;
 }

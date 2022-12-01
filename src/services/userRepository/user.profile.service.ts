@@ -1,11 +1,9 @@
-import { IUserProfile, IUserReturn } from "../../interfaces/user.interface";
+import { IUserId, IUserReturn } from "../../interfaces/user.interface";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import User from "../../entities/user.entity";
 
-const userProfileService = async ({
-  id,
-}: IUserProfile): Promise<IUserReturn> => {
+const userProfileService = async ({ id }: IUserId): Promise<IUserReturn> => {
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
   const user: IUserReturn | undefined = users.find((user) => user.id === id);

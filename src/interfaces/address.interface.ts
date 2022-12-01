@@ -1,5 +1,3 @@
-import { IAddressRelatedUser } from "./user.interface";
-
 export interface IAddress {
   street: string;
   district: string;
@@ -13,18 +11,6 @@ export interface IAddress {
   id: string;
 }
 
-export interface IAddressCreateSave extends IAddress {
-  created_at: Date;
-  updated_at: Date;
-  user: IAddressRelatedUser;
-}
-
-export interface IAddressReturn extends IAddress {
-  created_at: Date;
-  updated_at: Date;
-  user?: IAddressRelatedUser;
-}
-
-export interface IAddressDelete {
+export interface IAddressId {
   id: string;
 }
