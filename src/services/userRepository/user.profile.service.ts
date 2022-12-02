@@ -10,6 +10,14 @@ const userProfileService = async ({ id }: IUserId): Promise<IUserReturn> => {
 
   if (!user) throw new AppError(404, "User not found");
 
+  if (user.cart.products.length > 0) {
+    for (let product in user.cart.products) {
+      user.cart.products[
+        product
+      ].img = `http://localhost:3333/watch_store/product/${user.cart.products[product].img}`;
+    }
+  }
+
   delete user.password;
 
   return user;

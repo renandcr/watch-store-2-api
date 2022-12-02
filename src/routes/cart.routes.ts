@@ -9,10 +9,16 @@ const cartRouter = () => {
     verifyUserAuthentication,
     CartController.addProduct
   );
-  router.post(
+  router.delete(
     "/remove/:user_id/:product_id",
     verifyUserAuthentication,
     CartController.removeProduct
+  );
+
+  router.patch(
+    "/change_units/:user_id/:product_id",
+    verifyUserAuthentication,
+    CartController.changePurchaseUnits
   );
 
   return router;
