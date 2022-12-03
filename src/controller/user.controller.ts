@@ -37,9 +37,9 @@ class UserController {
   }
 
   static async profile(req: Request, res: Response) {
-    const { id } = req.params;
+    const { user_id } = req.params;
 
-    const user = await userProfileService({ id });
+    const user = await userProfileService({ user_id });
 
     return res.json(user);
   }
@@ -60,8 +60,8 @@ class UserController {
   }
 
   static async delete(req: Request, res: Response) {
-    const { id } = req.params;
-    await userDeleteService({ id });
+    const { user_id } = req.params;
+    await userDeleteService({ user_id });
 
     return res.json({ message: "Address deleted successfully" });
   }

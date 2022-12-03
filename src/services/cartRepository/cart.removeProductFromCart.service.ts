@@ -4,7 +4,7 @@ import { AppError } from "../../errors/appError";
 import User from "../../entities/user.entity";
 import Cart from "../../entities/cart.entity";
 
-const removeProductFromCart = async ({
+const removeProductFromCartService = async ({
   user_id,
   product_id,
 }: ICart): Promise<void> => {
@@ -14,33 +14,28 @@ const removeProductFromCart = async ({
 
   if (!user) throw new AppError(404, "User not found");
 
-  const cartRepository = AppDataSource.getRepository(Cart);
-  const carts = await cartRepository.find();
-  const cart = carts.find((cart) => cart.id === user.cart.id);
-
   const product = user.cart.products.find(
     (product) => product.id === product_id
   );
 
   if (!product) throw new AppError(404, "Product not found");
 
-  if (cart) {
-    cart.products = cart.products.filter(
-      (product) => product.id !== product_id
-    );
+  user.cart.products = user.cart.products.filter(
+    (product) => product.id !== product_id
+  );
 
-    cart.total_units = cart.products.reduce(
-      (acc, product) => product.purchase_units + acc,
-      0
-    );
+  user.cart.total_units = user.cart.products.reduce(
+    (acc, product) => product.purchase_units + acc,
+    0
+  );
 
-    cart.amount = cart.products.reduce(
-      (acc, product) => product.price + acc * product.purchase_units,
-      0
-    );
+  user.cart.amount = user.cart.products.reduce(
+    (acc, product) => product.price + acc * product.purchase_units,
+    0
+  );
 
-    await cartRepository.save(cart);
-  }
+  const cartRepository = AppDataSource.getRepository(Cart);
+  await cartRepository.save(user.cart);
 };
 
-export default removeProductFromCart;
+export default removeProductFromCartService;

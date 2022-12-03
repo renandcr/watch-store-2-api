@@ -3,10 +3,14 @@ import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import User from "../../entities/user.entity";
 
-const userProfileService = async ({ id }: IUserId): Promise<IUserReturn> => {
+const userProfileService = async ({
+  user_id,
+}: IUserId): Promise<IUserReturn> => {
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
-  const user: IUserReturn | undefined = users.find((user) => user.id === id);
+  const user: IUserReturn | undefined = users.find(
+    (user) => user.id === user_id
+  );
 
   if (!user) throw new AppError(404, "User not found");
 
