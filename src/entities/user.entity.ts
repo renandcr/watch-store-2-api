@@ -1,3 +1,4 @@
+import PurchaseOrder from "./purchaseOrder.entity";
 import Address from "./address.entity";
 import Cart from "./cart.entity";
 
@@ -38,6 +39,7 @@ class User {
 
   @OneToOne(() => Cart, {
     eager: true,
+    onDelete: "CASCADE",
   })
   @JoinColumn()
   cart: Cart;
@@ -46,6 +48,11 @@ class User {
     eager: true,
   })
   addresses: Address[];
+
+  @OneToMany(() => PurchaseOrder, (purchaseOrder) => purchaseOrder.user, {
+    eager: true,
+  })
+  purchaseOrders: PurchaseOrder[];
 }
 
 export default User;

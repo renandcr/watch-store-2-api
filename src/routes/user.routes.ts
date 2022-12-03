@@ -8,14 +8,18 @@ const userRouter = () => {
   router.post("/create", typeCheckerMiddleware, UserController.create);
   router.post("/login", typeCheckerMiddleware, UserController.login);
   router.get("/", verifyUserAuthentication, UserController.list);
-  router.get("/:id", verifyUserAuthentication, UserController.profile);
+  router.get("/:user_id", verifyUserAuthentication, UserController.profile);
   router.patch(
     "/update/:id",
     typeCheckerMiddleware,
     verifyUserAuthentication,
     UserController.update
   );
-  router.delete("/delete/:id", verifyUserAuthentication, UserController.delete);
+  router.delete(
+    "/delete/:user_id",
+    verifyUserAuthentication,
+    UserController.delete
+  );
 
   return router;
 };

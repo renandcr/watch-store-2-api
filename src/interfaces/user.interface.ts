@@ -32,5 +32,5 @@ export interface IUserLogin {
 }
 
 export interface IUserId {
-  id: string;
+  user_id: string;
 }
