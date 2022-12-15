@@ -8,7 +8,7 @@ const productDeleteService = async ({ id }: IProductId): Promise<void> => {
   const products = await productRepository.find();
   const product = products.find((product) => product.id === id);
 
-  if (!product) throw new AppError(404, "Product not found");
+  if (!product) throw new AppError(404, "[4007] Product not found");
 
   await productRepository.remove(product);
 };

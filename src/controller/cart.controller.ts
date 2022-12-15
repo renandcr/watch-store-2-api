@@ -1,14 +1,15 @@
 import removeProductFromCartService from "../services/cartRepository/cart.removeProductFromCart.service";
+import changePurchaseUnitsService from "../services/cartRepository/cart.changePurchaseUnits.service";
 import addProductToCartService from "../services/cartRepository/cart.addProductToCart.service";
 import { Request, Response } from "express";
-import changePurchaseUnits from "../services/cartRepository/changePurchaseUnits.service";
 
 class CartController {
   static async addProduct(req: Request, res: Response) {
-    const { user_id, product_id } = req.params;
-    await addProductToCartService({ user_id, product_id });
+    const { user_id } = req.params;
+    const { add_products } = req.body;
+    await addProductToCartService({ user_id, add_products });
 
-    return res.json({ message: "Product added to cart successfully" });
+    return res.json({ message: "Successfully performed operation" });
   }
 
   static async removeProduct(req: Request, res: Response) {
@@ -19,9 +20,9 @@ class CartController {
   }
 
   static async changePurchaseUnits(req: Request, res: Response) {
-    const { user_id, product_id } = req.params;
-    const { units } = req.body;
-    await changePurchaseUnits({ user_id, product_id, units });
+    const { user_id, productCart_id } = req.params;
+    const { change_units } = req.body;
+    await changePurchaseUnitsService({ user_id, productCart_id, change_units });
 
     return res.json({ message: "Product units changed successfully" });
   }

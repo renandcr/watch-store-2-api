@@ -1,4 +1,4 @@
-import Product from "./product.entity";
+import ProductCart from "./productCart.entity";
 import User from "./user.entity";
 
 import {
@@ -21,15 +21,23 @@ class PurchaseOrder {
   @Column({ type: "float" })
   total_price: number;
 
-  @ManyToOne(() => User, (user) => user.purchaseOrders)
+  @Column({ type: "float" })
+  shipping: number;
+
+  @Column({ type: "timestamp" })
+  created_at: Date;
+
+  @ManyToOne(() => User, (user) => user.purchaseOrders, {
+    onDelete: "CASCADE",
+  })
   user: User;
 
-  @ManyToMany(() => Product, {
+  @ManyToMany(() => ProductCart, {
     eager: true,
     onDelete: "CASCADE",
   })
   @JoinTable()
-  products: Product[];
+  products: ProductCart[];
 }
 
 export default PurchaseOrder;

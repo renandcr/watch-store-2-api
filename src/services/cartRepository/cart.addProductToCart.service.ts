@@ -1,40 +1,66 @@
+import ProductCart from "../../entities/productCart.entity";
 import { ICart } from "../../interfaces/cart.interface";
-import Product from "../../entities/product.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import User from "../../entities/user.entity";
 import Cart from "../../entities/cart.entity";
 
-const addProductToCartService = async ({
-  user_id,
-  product_id,
-}: ICart): Promise<void> => {
+const addProductToCartService = async (data: ICart): Promise<void> => {
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
-  const user = users.find((user) => user.id === user_id);
+  const user = users.find((user) => user.id === data.user_id);
 
-  if (!user) throw new AppError(404, "User not found");
+  if (!user) throw new AppError(404, "[4004] User not found");
 
-  const productRepository = AppDataSource.getRepository(Product);
-  const products = await productRepository.find();
-  const product = products.find((product) => product.id === product_id);
-
-  if (!product) throw new AppError(404, "Product not found");
-
-  if (user.cart.products.length > 0) {
-    const possibleProduct = user.cart.products.find(
-      (product) => product.id === product_id
+  const possibleRepeatProduct = user.cart.productCart.filter((current) => {
+    return data.add_products.products.find(
+      (item) => current.product.id === item.product.id
     );
-    if (possibleProduct)
-      throw new AppError(409, "This product is already in the cart");
+  });
+
+  if (
+    data.add_products.request_type !== "first_login" &&
+    possibleRepeatProduct.length
+  ) {
+    throw new AppError(409, "[4013] This product is already in the cart");
   }
 
-  user.cart.products = [...user.cart.products, product];
-  user.cart.total_units += product.purchase_units;
-  user.cart.amount += product.purchase_units * product.price;
+  const newProductList = data.add_products.products.filter((current) => {
+    let thereIsEqual = false;
+    const productFound = possibleRepeatProduct.find((item) => {
+      return current.product.id === item.product.id;
+    });
+    if (productFound) {
+      thereIsEqual = true;
+    }
+    if (!thereIsEqual) {
+      return current;
+    }
+  });
+
+  user.cart.total_units += newProductList.reduce(
+    (acc, current) => current.units + acc,
+    0
+  );
+
+  user.cart.amount += Number(
+    newProductList
+      .reduce((acc, current) => current.product.price * current.units + acc, 0)
+      .toFixed(2)
+  );
 
   const cartRepository = AppDataSource.getRepository(Cart);
   await cartRepository.save(user.cart);
+
+  const productCartRepository = AppDataSource.getRepository(ProductCart);
+  for (let product in newProductList) {
+    const productCart = new ProductCart();
+    productCart.cart = user.cart;
+    productCart.product = newProductList[product].product;
+    productCart.units = newProductList[product].units;
+
+    await productCartRepository.save(productCart);
+  }
 };
 
 export default addProductToCartService;

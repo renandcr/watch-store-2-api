@@ -1,3 +1,4 @@
+import PurchaseOrder from "../entities/purchaseOrder.entity";
 import Address from "../entities/address.entity";
 import Cart from "../entities/cart.entity";
 
@@ -10,7 +11,7 @@ export interface IUser {
 }
 
 export interface IUserUpdate extends IUser {
-  id: string;
+  user_id: string;
 }
 
 export interface IUserReturn {
@@ -24,6 +25,7 @@ export interface IUserReturn {
   updated_at: Date;
   addresses: Array<Address>;
   cart: Cart;
+  purchaseOrders: Array<PurchaseOrder>;
 }
 
 export interface IUserLogin {

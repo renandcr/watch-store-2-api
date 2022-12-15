@@ -12,13 +12,23 @@ const userProfileService = async ({
     (user) => user.id === user_id
   );
 
-  if (!user) throw new AppError(404, "User not found");
+  if (!user) throw new AppError(404, "[4004] User not found");
 
-  if (user.cart.products.length > 0) {
-    for (let product in user.cart.products) {
-      user.cart.products[
-        product
-      ].img = `http://localhost:3333/watch_store/product/${user.cart.products[product].img}`;
+  if (user.cart.productCart.length > 0) {
+    for (let current in user.cart.productCart) {
+      user.cart.productCart[
+        current
+      ].product.img = `http://localhost:3333/watch_store/product/${user.cart.productCart[current].product.img}`;
+    }
+  }
+
+  if (user.purchaseOrders.length > 0) {
+    for (let order in user.purchaseOrders) {
+      for (let item in user.purchaseOrders[order].products) {
+        user.purchaseOrders[order].products[
+          item
+        ].product.img = `http://localhost:3333/watch_store/product/${user.purchaseOrders[order].products[item].product.img}`;
+      }
     }
   }
 

@@ -8,7 +8,7 @@ const addressDeleteService = async ({ id }: IAddressId): Promise<void> => {
   const addresses = await addressRepository.find();
   const address = addresses.find((address) => address.id === id);
 
-  if (!address) throw new AppError(404, "Address not found");
+  if (!address) throw new AppError(404, "[4006] Address not found");
 
   await addressRepository.remove(address);
 };

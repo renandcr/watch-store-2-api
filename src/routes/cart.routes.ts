@@ -5,7 +5,7 @@ import { Router } from "express";
 const cartRouter = () => {
   const router = Router();
   router.post(
-    "/add/:user_id/:product_id",
+    "/add/:user_id",
     verifyUserAuthentication,
     CartController.addProduct
   );
@@ -14,9 +14,8 @@ const cartRouter = () => {
     verifyUserAuthentication,
     CartController.removeProduct
   );
-
   router.patch(
-    "/change_units/:user_id/:product_id",
+    "/change_units/:user_id/:productCart_id",
     verifyUserAuthentication,
     CartController.changePurchaseUnits
   );

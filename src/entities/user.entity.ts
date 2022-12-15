@@ -39,7 +39,6 @@ class User {
 
   @OneToOne(() => Cart, {
     eager: true,
-    onDelete: "CASCADE",
   })
   @JoinColumn()
   cart: Cart;

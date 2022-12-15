@@ -45,7 +45,7 @@ class UserController {
   }
 
   static async update(req: Request, res: Response) {
-    const { id } = req.params;
+    const { user_id } = req.params;
     const { name, last_name, email, password, admin }: IUser = req.body;
     const user = await userUpdateServices({
       name,
@@ -53,7 +53,7 @@ class UserController {
       email,
       password,
       admin,
-      id,
+      user_id,
     });
 
     return res.json(user);
@@ -63,7 +63,7 @@ class UserController {
     const { user_id } = req.params;
     await userDeleteService({ user_id });
 
-    return res.json({ message: "Address deleted successfully" });
+    return res.json({ message: "User deleted successfully" });
   }
 }
 

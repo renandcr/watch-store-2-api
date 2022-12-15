@@ -8,10 +8,10 @@ const userUpdateServices = async (data: IUserUpdate): Promise<IUserReturn> => {
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
   const user: IUserReturn | undefined = users.find(
-    (user) => user.id === data.id
+    (user) => user.id === data.user_id
   );
 
-  if (!user) throw new AppError(404, "User not found");
+  if (!user) throw new AppError(404, "[4004] User not found");
 
   user.name = data.name;
   user.last_name = data.last_name;

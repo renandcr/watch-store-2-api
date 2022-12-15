@@ -10,7 +10,7 @@ const userRouter = () => {
   router.get("/", verifyUserAuthentication, UserController.list);
   router.get("/:user_id", verifyUserAuthentication, UserController.profile);
   router.patch(
-    "/update/:id",
+    "/update/:user_id",
     typeCheckerMiddleware,
     verifyUserAuthentication,
     UserController.update

@@ -8,14 +8,13 @@ const productUpdateService = async (data: IProductUpdate): Promise<Product> => {
   const products = await productRepository.find();
   const product = products.find((product) => product.id === data.id);
 
-  if (!product) throw new AppError(404, "Product not found");
+  if (!product) throw new AppError(404, "[4007] Product not found");
 
   product.img = data.img;
   product.reference = data.reference;
   product.description = data.description;
-  product.price = data.price;
+  product.price = Number(data.price.toFixed(2));
   product.stock_quantity = data.stock_quantity;
-  product.purchase_units = data.purchase_units;
   product.category = data.category;
   product.genre = data.genre;
   product.created_at = product.created_at;
