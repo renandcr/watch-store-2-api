@@ -5,7 +5,7 @@ import { Router } from "express";
 const addressRouter = () => {
   const router = Router();
   router.post(
-    "/create/:id",
+    "/create/:user_id",
     verifyUserAuthentication,
     AddressController.create
   );

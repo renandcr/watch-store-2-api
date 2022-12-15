@@ -5,9 +5,14 @@ import { Router } from "express";
 const purchaseOrderRouter = () => {
   const router = Router();
   router.post(
-    "/:user_id",
+    "/create/:user_id",
     verifyUserAuthentication,
     PurchaseOrderController.create
+  );
+  router.delete(
+    "/delete/:user_id/:request_id",
+    verifyUserAuthentication,
+    PurchaseOrderController.delete
   );
 
   return router;

@@ -21,13 +21,13 @@ const verifyUserAuthentication = async (
       token,
       <string>process.env.SECRET_KEY,
       (errors, encoded: any) => {
-        if (errors) throw new AppError(406, "Invalid token");
+        if (errors) throw new AppError(406, "[4017] Invalid token");
 
         loggedInUserId = encoded["id_token"];
       }
     );
   } else {
-    throw new AppError(401, "Request is missing token");
+    throw new AppError(401, "[4000] Request is missing token");
   }
 
   const userRepository = AppDataSource.getRepository(User);
@@ -35,27 +35,48 @@ const verifyUserAuthentication = async (
     id: loggedInUserId,
   });
 
-  if (!user) throw new AppError(500, "Internal server error");
+  if (!user) throw new AppError(500, "[4016] Internal server error");
 
   const isAddressRoute = req.originalUrl.replace(/[/]/gi, " ").split(" ");
 
   if (user["admin"]) return next();
-  else if (loggedInUserId === req.params["id"]) return next();
+  else if (loggedInUserId === req.params["user_id"]) return next();
   else if (isAddressRoute[2] === "address") {
-    if (isAddressRoute[3] === "create" && loggedInUserId !== req.params["id"]) {
-      throw new AppError(401, "Unauthorized permission");
+    if (
+      isAddressRoute[3] === "create" &&
+      loggedInUserId !== req.params["user_id"]
+    ) {
+      throw new AppError(
+        401,
+        "[4018] You are not authorized to access or make changes to other accounts"
+      );
+    } else if (
+      isAddressRoute[3] === "update" ||
+      isAddressRoute[3] === "delete"
+    ) {
+      const userAddress = user.addresses.find(
+        (address) => address.id === req.params["id"]
+      );
+      if (!userAddress) {
+        throw new AppError(
+          401,
+          "[4018] You are not authorized to access or make changes to other accounts"
+        );
+      } else {
+        return next();
+      }
     }
-
-    const addressIsCompatible = user.addresses.find(
-      (address) => address.id === req.params["id"]
+  } else if (!req.params["user_id"] && !user["admin"]) {
+    throw new AppError(
+      401,
+      "[4018] You are not authorized to access or make changes to other accounts"
     );
-
-    if (!addressIsCompatible) {
-      throw new AppError(401, "Unauthorized permission");
-    } else return next();
-  } else if (!req.params["id"] && !user["admin"]) {
-    throw new AppError(401, "Unauthorized permission");
-  } else throw new AppError(401, "Unauthorized permission");
+  } else {
+    throw new AppError(
+      401,
+      "[4018] You are not authorized to access or make changes to other accounts"
+    );
+  }
 };
 
 export default verifyUserAuthentication;

@@ -13,7 +13,6 @@ class ProductController {
       description,
       price,
       stock_quantity,
-      purchase_units,
       category,
       genre,
     }: IProduct = req.body;
@@ -23,7 +22,6 @@ class ProductController {
       description,
       price,
       stock_quantity,
-      purchase_units,
       category,
       genre,
     });
@@ -47,7 +45,6 @@ class ProductController {
       description,
       price,
       stock_quantity,
-      purchase_units,
       category,
       genre,
     }: IProduct = req.body;
@@ -57,7 +54,6 @@ class ProductController {
       description,
       price,
       stock_quantity,
-      purchase_units,
       category,
       genre,
       id,

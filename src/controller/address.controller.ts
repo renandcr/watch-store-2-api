@@ -17,7 +17,7 @@ class AddressController {
       phone,
       main,
     }: IAddress = req.body;
-    const { id } = req.params;
+    const { user_id } = req.params;
 
     await addressCreateService({
       street,
@@ -29,7 +29,7 @@ class AddressController {
       zip_code,
       phone,
       main,
-      id,
+      user_id,
     });
 
     return res.status(201).json({ message: "Successfully registered address" });
@@ -71,7 +71,7 @@ class AddressController {
     const { id } = req.params;
     await addressDeleteService({ id });
 
-    return res.status(204).json();
+    return res.json({ message: "Address deleted successfully" });
   }
 }
 

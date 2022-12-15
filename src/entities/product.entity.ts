@@ -1,4 +1,5 @@
-import { PrimaryGeneratedColumn, Column, Entity } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany } from "typeorm";
+import ProductCart from "./productCart.entity";
 
 @Entity()
 class Product {
@@ -20,9 +21,6 @@ class Product {
   @Column({ type: "integer" })
   stock_quantity: number;
 
-  @Column({ type: "integer", default: 1 })
-  purchase_units: number;
-
   @Column({ type: "varchar", length: 50 })
   category: string;
 
@@ -34,6 +32,9 @@ class Product {
 
   @Column({ type: "timestamp" })
   updated_at: Date;
+
+  @OneToMany(() => ProductCart, (productCart) => productCart.product)
+  productCart!: ProductCart[];
 }
 
 export default Product;

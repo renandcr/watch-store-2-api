@@ -1,12 +1,5 @@
-import Product from "./product.entity";
-
-import {
-  PrimaryGeneratedColumn,
-  ManyToMany,
-  JoinTable,
-  Column,
-  Entity,
-} from "typeorm";
+import { PrimaryGeneratedColumn, OneToMany, Column, Entity } from "typeorm";
+import ProductCart from "./productCart.entity";
 
 @Entity()
 class Cart {
@@ -19,12 +12,10 @@ class Cart {
   @Column({ type: "float" })
   amount: number;
 
-  @ManyToMany(() => Product, {
-    onDelete: "CASCADE",
+  @OneToMany(() => ProductCart, (productCart) => productCart.cart, {
     eager: true,
   })
-  @JoinTable()
-  products: Product[];
+  productCart!: ProductCart[];
 }
 
 export default Cart;

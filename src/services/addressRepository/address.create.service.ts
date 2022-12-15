@@ -8,12 +8,12 @@ const addressCreateService = async (data: IAddress): Promise<void> => {
   const addressRepository = AppDataSource.getRepository(Address);
   const userRepository = AppDataSource.getRepository(User);
   const users = await userRepository.find();
-  const user = users.find((user) => user.id === data.id);
+  const user = users.find((user) => user.id === data.user_id);
 
   if (!user)
     throw new AppError(
       404,
-      "User not found. Address cannot be assigned to a non-existent user"
+      "[4005] User not found. Address cannot be assigned to a non-existent user"
     );
 
   if (user.addresses.length) {

@@ -1,5 +1,3 @@
-import { Request, Response } from "express";
-// import jwt from "jsonwebtoken";
 import multer from "multer";
 import path from "path";
 

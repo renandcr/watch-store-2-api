@@ -7,11 +7,11 @@ import bcrypt from "bcrypt";
 
 const createUserService = async (data: IUser): Promise<IUserReturn> => {
   if (!data.email)
-    throw new AppError(406, "Check if the name of the keys is correct");
+    throw new AppError(406, "[4001] Check if the name of the keys is correct");
   const userRepository = AppDataSource.getRepository(User);
   const verifyUser = await userRepository.findOneBy({ email: data.email });
 
-  if (verifyUser) throw new AppError(409, "Email already exists");
+  if (verifyUser) throw new AppError(409, "[4009] Email already exists");
 
   const cartRepository = AppDataSource.getRepository(Cart);
   const cart = new Cart();

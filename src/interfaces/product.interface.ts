@@ -4,7 +4,6 @@ export interface IProduct {
   description: string;
   price: number;
   stock_quantity: number;
-  purchase_units: number;
   category: string;
   genre: string;
 }
