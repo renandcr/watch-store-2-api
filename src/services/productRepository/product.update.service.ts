@@ -13,7 +13,7 @@ const productUpdateService = async (data: IProductUpdate): Promise<Product> => {
   product.img = data.img;
   product.reference = data.reference;
   product.description = data.description;
-  product.price = Number(data.price.toFixed(2));
+  product.price = data.price;
   product.stock_quantity = data.stock_quantity;
   product.category = data.category;
   product.genre = data.genre;

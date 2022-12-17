@@ -14,9 +14,9 @@ const changePurchaseUnitsService = async (
 
   if (!user) throw new AppError(404, "[4004] User not found");
 
-  const productCart = user.cart.productCart.find((current) => {
-    return current.id === data.productCart_id;
-  });
+  const productCart = user.cart.productCart.find(
+    (current) => current.id === data.productCart_id
+  );
 
   if (!productCart) {
     throw new AppError(404, "[4007] Product not found");
@@ -25,7 +25,19 @@ const changePurchaseUnitsService = async (
       productCart.units += data.change_units.units;
     } else productCart.units = data.change_units.units;
 
-    if (productCart.units < 1) productCart.units = 1;
+    if (productCart.units < 1) {
+      productCart.units = 1;
+    } else if (productCart.units > 5 && !user.admin) {
+      throw new AppError(
+        400,
+        `[4021] Product with limited purchase quantity of ${5} units per customer`
+      );
+    } else if (productCart.product.stock_quantity - productCart.units < 0) {
+      throw new AppError(
+        400,
+        `[4019] Insufficient stock. ${productCart.product.stock_quantity} units are available for purchase`
+      );
+    }
 
     const productCartRepository = AppDataSource.getRepository(ProductCart);
     await productCartRepository.save(productCart);
