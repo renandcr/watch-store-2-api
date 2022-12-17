@@ -25,7 +25,7 @@ const addProductToCartService = async (data: ICart): Promise<void> => {
     throw new AppError(409, "[4013] This product is already in the cart");
   }
 
-  const newProductList = data.add_products.products.filter((current) => {
+  const productList = data.add_products.products.filter((current) => {
     let thereIsEqual = false;
     const productFound = possibleRepeatProduct.find((item) => {
       return current.product.id === item.product.id;
@@ -38,13 +38,13 @@ const addProductToCartService = async (data: ICart): Promise<void> => {
     }
   });
 
-  user.cart.total_units += newProductList.reduce(
+  user.cart.total_units += productList.reduce(
     (acc, current) => current.units + acc,
     0
   );
 
   user.cart.amount += Number(
-    newProductList
+    productList
       .reduce((acc, current) => current.product.price * current.units + acc, 0)
       .toFixed(2)
   );
@@ -53,11 +53,11 @@ const addProductToCartService = async (data: ICart): Promise<void> => {
   await cartRepository.save(user.cart);
 
   const productCartRepository = AppDataSource.getRepository(ProductCart);
-  for (let product in newProductList) {
+  for (let product in productList) {
     const productCart = new ProductCart();
     productCart.cart = user.cart;
-    productCart.product = newProductList[product].product;
-    productCart.units = newProductList[product].units;
+    productCart.product = productList[product].product;
+    productCart.units = productList[product].units;
 
     await productCartRepository.save(productCart);
   }

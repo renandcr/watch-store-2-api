@@ -1,19 +1,22 @@
-[4000] "Request is missing token"
-[4001] "Check if the name of the keys is correct"
-[4002] "Syntax in admin key is incorrect"
-[4003] "Value type in admin key must be a boolean"
-[4004] "User not found"
-[4005] "User not found. Address cannot be assigned to a non-existent user"
-[4006] "Address not found"
-[4007] "Product not found"
-[4008] "Purchase order not found"
-[4009] "Email already exists" 
-[4010] "Numbers are not allowed in the first and last name fields" 
-[4011] "Invalid email" 
-[4012] "Invalid email or password" 
-[4013] "This product is already in the cart" 
-[4014] "Empty cart" 
-[4015] "No registered delivery address" 
-[4016] "Internal server error" 
-[4017] "Invalid token" 
-[4018] "You are not authorized to access or make changes to other accounts."
+[4000] Request is missing token
+[4001] Check if the name of the keys is correct
+[4002] Syntax in admin key is incorrect
+[4003] Value type in admin key must be a boolean
+[4004] User not found
+[4005] User not found. Address cannot be assigned to a non-existent user
+[4006] Address not found
+[4007] Product not found
+[4008] Purchase order not found
+[4009] Email already exists
+[4010] Numbers are not allowed in the first and last name fields
+[4011] Invalid email
+[4012] Invalid email or password
+[4013] This product is already in the cart
+[4014] Empty cart
+[4015] No registered delivery address
+[4016] Internal server error
+[4017] Invalid token
+[4018] You are not authorized to access or make changes to other accounts
+[4019] Insufficient stock. X units are available for purchase
+[4020] Product sold out in cart
+[4021] Product with limited purchase quantity of X units per customer
