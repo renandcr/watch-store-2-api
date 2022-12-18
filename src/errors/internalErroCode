@@ -20,3 +20,5 @@
 [4019] Insufficient stock. X units are available for purchase
 [4020] Product sold out in cart
 [4021] Product with limited purchase quantity of X units per customer
+[4022] You are not authorized for this activity
+[4023] You must indicate a delivery address

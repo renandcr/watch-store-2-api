@@ -38,7 +38,6 @@ class UserController {
 
   static async profile(req: Request, res: Response) {
     const { user_id } = req.params;
-
     const user = await userProfileService({ user_id });
 
     return res.json(user);
@@ -56,7 +55,7 @@ class UserController {
       user_id,
     });
 
-    return res.json(user);
+    return res.json({ message: "User updated successfully", data: user });
   }
 
   static async delete(req: Request, res: Response) {

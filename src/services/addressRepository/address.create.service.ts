@@ -17,10 +17,10 @@ const addressCreateService = async (data: IAddress): Promise<void> => {
     );
 
   if (user.addresses.length) {
-    user.addresses.map(async (address) => {
-      address.main = false;
-      await addressRepository.save(address);
-    });
+    for (let current in user.addresses) {
+      user.addresses[current].main = false;
+      await addressRepository.save(user.addresses[current]);
+    }
   }
 
   const address = new Address();

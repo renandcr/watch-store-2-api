@@ -5,8 +5,8 @@ import User from "../entities/user.entity";
 import jwt from "jsonwebtoken";
 
 /*
-Administrador tem total liberdade para fazer alterações.
-Usuário pode alterar somente seu perfil e endereço.
+Administrador tem total liberdade de acesso.
+Usuário pode acessar somente seu perfil e endereço.
 */
 const verifyUserAuthentication = async (
   req: Request,
@@ -40,6 +40,8 @@ const verifyUserAuthentication = async (
   const isAddressRoute = req.originalUrl.replace(/[/]/gi, " ").split(" ");
 
   if (user["admin"]) return next();
+  else if (isAddressRoute[2] === "product")
+    throw new AppError(401, "[4022] You are not authorized for this activity");
   else if (loggedInUserId === req.params["user_id"]) return next();
   else if (isAddressRoute[2] === "address") {
     if (
