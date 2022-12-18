@@ -14,7 +14,7 @@ const UserLoginService = async (data: IUserLogin): Promise<string> => {
 
   if (!user) throw new AppError(401, "[4012] Invalid email or password");
 
-  const checkPassword = bcrypt.compareSync(data.password, user!.password);
+  const checkPassword = bcrypt.compareSync(data.password, user.password);
 
   if (!checkPassword)
     throw new AppError(401, "[4012] Invalid email or password");

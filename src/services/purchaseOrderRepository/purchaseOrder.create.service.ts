@@ -18,11 +18,22 @@ const createPurchaseOrderService = async (
 
   const cartRepository = AppDataSource.getRepository(Cart);
 
-  if (!user.cart.productCart.length)
+  if (!user.cart.productCart.length) {
     throw new AppError(406, "[4014] Empty cart");
-
-  if (!user.addresses.length)
+  } else if (!user.addresses.length) {
     throw new AppError(406, "[4015] No registered delivery address");
+  } else {
+    let mainAddress = false;
+    for (let current in user.addresses) {
+      if (user.addresses[current].main) {
+        mainAddress = true;
+        break;
+      }
+    }
+    if (!mainAddress) {
+      throw new AppError(406, "[4023] You must indicate a delivery address");
+    }
+  }
 
   for (let current in user.cart.productCart) {
     if (user.cart.productCart[current].product.stock_quantity < 1) {

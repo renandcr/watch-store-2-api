@@ -14,20 +14,18 @@ const removeProductFromCartService = async (
 
   if (!user) throw new AppError(404, "[4004] User not found");
 
-  const product = user.cart.productCart.find(
-    (current) => current.product.id === data.product_id
-  );
-
-  if (!product) throw new AppError(404, "[4007] Product not found");
-
   const productCartRepository = AppDataSource.getRepository(ProductCart);
 
+  let productFound = false;
   for (let current in user.cart.productCart) {
     if (user.cart.productCart[current].product.id === data.product_id) {
+      productFound = true;
       await productCartRepository.remove(user.cart.productCart[current]);
       break;
     }
   }
+
+  if (!productFound) throw new AppError(404, "[4007] Product not found");
 
   const cartRepository = AppDataSource.getRepository(Cart);
   const cart = await cartRepository.findOne({ where: { id: user.cart.id } });
