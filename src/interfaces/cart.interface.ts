@@ -1,5 +1,6 @@
 import Product from "../entities/product.entity";
 import Cart from "../entities/cart.entity";
+import User from "../entities/user.entity";
 
 export interface ICart {
   user_id: string;
@@ -24,4 +25,5 @@ export interface IProductCart {
   units: number;
   product: Product;
   cart: Cart;
+  user: User;
 }

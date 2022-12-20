@@ -1,4 +1,5 @@
 import PurchaseOrder from "./purchaseOrder.entity";
+import ProductCart from "./productCart.entity";
 import Address from "./address.entity";
 import Cart from "./cart.entity";
 
@@ -45,13 +46,20 @@ class User {
 
   @OneToMany(() => Address, (address) => address.user, {
     eager: true,
+    cascade: true,
   })
   addresses: Address[];
 
   @OneToMany(() => PurchaseOrder, (purchaseOrder) => purchaseOrder.user, {
     eager: true,
+    cascade: true,
   })
   purchaseOrders: PurchaseOrder[];
+
+  @OneToMany(() => ProductCart, (productCart) => productCart.user, {
+    cascade: true,
+  })
+  productCart!: ProductCart[];
 }
 
 export default User;
