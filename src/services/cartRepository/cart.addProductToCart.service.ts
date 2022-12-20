@@ -56,6 +56,7 @@ const addProductToCartService = async (data: ICart): Promise<void> => {
   for (let product in productList) {
     const productCart = new ProductCart();
     productCart.cart = user.cart;
+    productCart.user = user;
     productCart.product = productList[product].product;
     productCart.units = productList[product].units;
 

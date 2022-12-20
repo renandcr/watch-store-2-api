@@ -1,6 +1,5 @@
 import { IPurchaseOrderCreate } from "../../interfaces/purchaseOrder.interface";
 import PurchaseOrder from "../../entities/purchaseOrder.entity";
-import ProductCart from "../../entities/productCart.entity";
 import Product from "../../entities/product.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
@@ -68,9 +67,6 @@ const createPurchaseOrderService = async (
   user.cart.total_units = 0;
 
   await cartRepository.save(user.cart);
-
-  const productCartRepository = AppDataSource.getRepository(ProductCart);
-  await productCartRepository.save(user.cart.productCart);
 };
 
 export default createPurchaseOrderService;

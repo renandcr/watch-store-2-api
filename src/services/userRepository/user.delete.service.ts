@@ -1,4 +1,3 @@
-import ProductCart from "../../entities/productCart.entity";
 import { IUserId } from "../../interfaces/user.interface";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
@@ -15,9 +14,6 @@ const userDeleteService = async ({ user_id }: IUserId): Promise<void> => {
   const user = users.find((user) => user.id === user_id);
 
   if (!user) throw new AppError(404, "[4004] User not found");
-
-  const productCartRepository = AppDataSource.getRepository(ProductCart);
-  await productCartRepository.remove(user.cart.productCart);
 
   await userRepository.remove(user);
 
