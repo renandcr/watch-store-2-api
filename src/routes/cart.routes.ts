@@ -20,6 +20,12 @@ const cartRouter = () => {
     CartController.changePurchaseUnits
   );
 
+  router.patch(
+    "/change_installments/:user_id/",
+    verifyUserAuthentication,
+    CartController.changeInstallments
+  );
+
   return router;
 };
 

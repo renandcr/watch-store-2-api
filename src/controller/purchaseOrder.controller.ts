@@ -5,8 +5,7 @@ import { Request, Response } from "express";
 class PurchaseOrderController {
   static async create(req: Request, res: Response) {
     const { user_id } = req.params;
-    const { shipping } = req.body;
-    await createPurchaseOrderService({ user_id, shipping });
+    await createPurchaseOrderService({ user_id });
 
     return res
       .status(201)

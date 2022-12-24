@@ -15,9 +15,9 @@ appRoutes(app);
 app.use(errorMiddleware);
 
 app.get("/", (_: Request, res: Response) => {
-  res.send("Api Watch Store 2 running!");
+  res.send("Hello Watch Store!");
 });
 
-app.listen(port, () => {
-  console.log(`Api running on port ${port}!`);
+app.listen(process.env.PORT || port, () => {
+  console.log(`Api running in development or production.`);
 });

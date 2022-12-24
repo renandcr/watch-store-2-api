@@ -1,6 +1,5 @@
 export interface IPurchaseOrderCreate {
   user_id: string;
-  shipping: number;
 }
 
 export interface IPurchaseOrderDelete {

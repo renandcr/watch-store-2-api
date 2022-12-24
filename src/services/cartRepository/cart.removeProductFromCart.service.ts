@@ -4,6 +4,7 @@ import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import User from "../../entities/user.entity";
 import Cart from "../../entities/cart.entity";
+import { formatPrices } from "../../methods";
 
 const removeProductFromCartService = async (
   data: ICartParams
@@ -40,6 +41,21 @@ const removeProductFromCartService = async (
       .reduce((acc, current) => current.product.price * current.units + acc, 0)
       .toFixed(2)
   );
+
+  let numberOfInstallments = 1;
+  let installmentValue = 0;
+
+  if (cart!.productCart.length < 1) {
+    cart!.shipping = 0;
+    cart!.installment = "Em 1x de 0 sem juros";
+  } else {
+    cart!.shipping = cart!.shipping;
+    numberOfInstallments = Number(cart!.installment.split("")[3]);
+    installmentValue = (cart!.shipping + cart!.amount) / numberOfInstallments;
+    cart!.installment = `Em ${numberOfInstallments}x de ${formatPrices(
+      installmentValue
+    )} sem juros`;
+  }
 
   await cartRepository.save(cart!);
 };

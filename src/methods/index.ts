@@ -9,3 +9,12 @@ export const storage = multer.diskStorage({
     callback(null, file.originalname);
   },
 });
+
+export const formatPrices = (value: number) => {
+  if (value) {
+    return value.toLocaleString("pt-br", {
+      style: "currency",
+      currency: "BRL",
+    });
+  }
+};
