@@ -1,5 +1,6 @@
 import removeProductFromCartService from "../services/cartRepository/cart.removeProductFromCart.service";
 import changePurchaseUnitsService from "../services/cartRepository/cart.changePurchaseUnits.service";
+import changeInstallmentsService from "../services/cartRepository/cart.changeInstallments.service";
 import addProductToCartService from "../services/cartRepository/cart.addProductToCart.service";
 import { Request, Response } from "express";
 
@@ -25,6 +26,15 @@ class CartController {
     await changePurchaseUnitsService({ user_id, productCart_id, change_units });
 
     return res.json({ message: "Product units changed successfully" });
+  }
+
+  static async changeInstallments(req: Request, res: Response) {
+    const { installment } = req.body;
+    const { user_id } = req.params;
+
+    await changeInstallmentsService({ installment, user_id });
+
+    return res.json({ message: "Payment condition changed successfully" });
   }
 }
 

@@ -17,6 +17,8 @@ const createUserService = async (data: IUser): Promise<IUserReturn> => {
   const cart = new Cart();
   cart.total_units = 0;
   cart.amount = 0;
+  cart.installment = "Em 1x de 0 sem juros";
+  cart.shipping = 0;
 
   await cartRepository.save(cart);
 

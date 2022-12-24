@@ -43,8 +43,8 @@ const createPurchaseOrderService = async (
   const newPurchaseOrder = new PurchaseOrder();
   newPurchaseOrder.user = user;
   newPurchaseOrder.products = user.cart.productCart;
-  newPurchaseOrder.shipping = data.shipping;
-  newPurchaseOrder.total_price = user.cart.amount + data.shipping;
+  newPurchaseOrder.shipping = user.cart.shipping;
+  newPurchaseOrder.total_price = user.cart.amount + user.cart.shipping;
   newPurchaseOrder.purchase_units = user.cart.total_units;
   newPurchaseOrder.created_at = new Date();
 
@@ -65,6 +65,7 @@ const createPurchaseOrderService = async (
   user.cart.productCart = [];
   user.cart.amount = 0;
   user.cart.total_units = 0;
+  user.cart.installment = "Em 1x de 0 sem juros";
 
   await cartRepository.save(user.cart);
 };

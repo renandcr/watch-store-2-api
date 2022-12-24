@@ -4,6 +4,7 @@ import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import User from "../../entities/user.entity";
 import Cart from "../../entities/cart.entity";
+import { formatPrices } from "../../methods";
 
 const addProductToCartService = async (data: ICart): Promise<void> => {
   const userRepository = AppDataSource.getRepository(User);
@@ -48,6 +49,16 @@ const addProductToCartService = async (data: ICart): Promise<void> => {
       .reduce((acc, current) => current.product.price * current.units + acc, 0)
       .toFixed(2)
   );
+
+  user.cart.shipping = 28.9;
+
+  const numberOfInstallments = Number(user.cart.installment.split("")[3]);
+  const installmentValue =
+    (user.cart.shipping + user.cart.amount) / numberOfInstallments;
+
+  user.cart.installment = `Em ${numberOfInstallments}x de ${formatPrices(
+    installmentValue
+  )} sem juros`;
 
   const cartRepository = AppDataSource.getRepository(Cart);
   await cartRepository.save(user.cart);

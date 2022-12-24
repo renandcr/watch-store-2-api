@@ -21,6 +21,11 @@ export interface ICartChangeUnits {
   change_units: { change_type: string; units: number };
 }
 
+export interface ICartChangeInstallments {
+  installment: string;
+  user_id: string;
+}
+
 export interface IProductCart {
   units: number;
   product: Product;

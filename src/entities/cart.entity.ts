@@ -12,6 +12,12 @@ class Cart {
   @Column({ type: "float" })
   amount: number;
 
+  @Column({ type: "varchar" })
+  installment: string;
+
+  @Column({ type: "float" })
+  shipping: number;
+
   @OneToMany(() => ProductCart, (productCart) => productCart.cart, {
     eager: true,
   })
