@@ -3,9 +3,7 @@ import Product from "../../entities/product.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 
-const productCreateService = async ({
-  ...data
-}: IProduct): Promise<Product> => {
+const productCreateService = async (data: IProduct): Promise<Product> => {
   if (!data.reference)
     throw new AppError(406, "Make sure the key name is correct");
 
@@ -21,7 +19,7 @@ const productCreateService = async ({
   product.img = data.img;
   product.reference = data.reference;
   product.description = data.description;
-  product.price = Number(data.price.toFixed(2));
+  product.price = data.price;
   product.stock_quantity = data.stock_quantity;
   product.category = data.category;
   product.genre = data.genre;
