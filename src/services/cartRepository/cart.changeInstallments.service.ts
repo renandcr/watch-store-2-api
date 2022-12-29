@@ -1,21 +1,23 @@
 import { ICartChangeInstallments } from "../../interfaces/cart.interface";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import User from "../../entities/user.entity";
+import Customer from "../../entities/customer.entity";
 import Cart from "../../entities/cart.entity";
 
 const changeInstallmentsService = async (data: ICartChangeInstallments) => {
-  const userRepository = AppDataSource.getRepository(User);
-  const users = await userRepository.find();
-  const user = users.find((user) => user.id === data.user_id);
+  const customerRepository = AppDataSource.getRepository(Customer);
+  const customers = await customerRepository.find();
+  const customer = customers.find(
+    (customer) => customer.id === data.customer_id
+  );
 
-  if (!user) throw new AppError(404, "[4004] User not found");
+  if (!customer) throw new AppError(404, "[4004] Customer not found");
 
-  user.cart.installment = data.installment;
+  customer.cart.installment = data.installment;
 
   const cartRepository = AppDataSource.getRepository(Cart);
 
-  await cartRepository.save(user.cart);
+  await cartRepository.save(customer.cart);
 };
 
 export default changeInstallmentsService;

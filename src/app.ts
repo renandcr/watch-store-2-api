@@ -6,7 +6,7 @@ import "express-async-errors";
 const cors = require("cors");
 
 const app = express();
-const port = 3333;
+export const PORT = process.env.PORT || 3333;
 
 app.use("/watch_store/product", express.static("src/uploads"));
 app.use(cors());
@@ -18,6 +18,6 @@ app.get("/", (_: Request, res: Response) => {
   res.send("Hello Watch Store!");
 });
 
-app.listen(process.env.PORT || port, () => {
-  console.log(`Api running in development or production.`);
+app.listen(PORT, () => {
+  console.log(`API running on port ${PORT}`);
 });

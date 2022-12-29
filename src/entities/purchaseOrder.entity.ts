@@ -1,5 +1,5 @@
 import ProductCart from "./productCart.entity";
-import User from "./user.entity";
+import Customer from "./customer.entity";
 
 import {
   PrimaryGeneratedColumn,
@@ -27,10 +27,10 @@ class PurchaseOrder {
   @Column({ type: "timestamp" })
   created_at: Date;
 
-  @ManyToOne(() => User, (user) => user.purchaseOrders, {
+  @ManyToOne(() => Customer, (customer) => customer.purchaseOrders, {
     onDelete: "CASCADE",
   })
-  user: User;
+  customer: Customer;
 
   @ManyToMany(() => ProductCart, {
     eager: true,

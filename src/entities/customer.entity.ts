@@ -13,7 +13,7 @@ import {
 } from "typeorm";
 
 @Entity()
-class User {
+class Customer {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
@@ -44,22 +44,22 @@ class User {
   @JoinColumn()
   cart: Cart;
 
-  @OneToMany(() => Address, (address) => address.user, {
+  @OneToMany(() => Address, (address) => address.customer, {
     eager: true,
     cascade: true,
   })
   addresses: Address[];
 
-  @OneToMany(() => PurchaseOrder, (purchaseOrder) => purchaseOrder.user, {
+  @OneToMany(() => PurchaseOrder, (purchaseOrder) => purchaseOrder.customer, {
     eager: true,
     cascade: true,
   })
   purchaseOrders: PurchaseOrder[];
 
-  @OneToMany(() => ProductCart, (productCart) => productCart.user, {
+  @OneToMany(() => ProductCart, (productCart) => productCart.customer, {
     cascade: true,
   })
   productCart!: ProductCart[];
 }
 
-export default User;
+export default Customer;

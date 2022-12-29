@@ -1,28 +1,28 @@
-import verifyUserAuthentication from "../middlewares/verifyUserAuthentication.middleware";
+import verifyCustomerAuthentication from "../middlewares/verifyCustomerAuthentication.middleware";
 import CartController from "../controller/cart.controller";
 import { Router } from "express";
 
 const cartRouter = () => {
   const router = Router();
   router.post(
-    "/add/:user_id",
-    verifyUserAuthentication,
+    "/add/:customer_id",
+    verifyCustomerAuthentication,
     CartController.addProduct
   );
   router.delete(
-    "/remove/:user_id/:product_id",
-    verifyUserAuthentication,
+    "/remove/:customer_id/:product_id",
+    verifyCustomerAuthentication,
     CartController.removeProduct
   );
   router.patch(
-    "/change_units/:user_id/:productCart_id",
-    verifyUserAuthentication,
+    "/change_units/:customer_id/:productCart_id",
+    verifyCustomerAuthentication,
     CartController.changePurchaseUnits
   );
 
   router.patch(
-    "/change_installments/:user_id/",
-    verifyUserAuthentication,
+    "/change_installments/:customer_id/",
+    verifyCustomerAuthentication,
     CartController.changeInstallments
   );
 

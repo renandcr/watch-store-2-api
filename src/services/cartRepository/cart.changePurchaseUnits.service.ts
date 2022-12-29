@@ -2,20 +2,22 @@ import { ICartChangeUnits } from "../../interfaces/cart.interface";
 import ProductCart from "../../entities/productCart.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import User from "../../entities/user.entity";
+import Customer from "../../entities/customer.entity";
 import Cart from "../../entities/cart.entity";
 import { formatPrices } from "../../methods";
 
 const changePurchaseUnitsService = async (
   data: ICartChangeUnits
 ): Promise<void> => {
-  const userRepository = AppDataSource.getRepository(User);
-  const users = await userRepository.find();
-  const user = users.find((user) => user.id === data.user_id);
+  const customerRepository = AppDataSource.getRepository(Customer);
+  const customers = await customerRepository.find();
+  const customer = customers.find(
+    (customer) => customer.id === data.customer_id
+  );
 
-  if (!user) throw new AppError(404, "[4004] User not found");
+  if (!customer) throw new AppError(404, "[4004] Customer not found");
 
-  const productCart = user.cart.productCart.find(
+  const productCart = customer.cart.productCart.find(
     (current) => current.id === data.productCart_id
   );
 
@@ -28,7 +30,7 @@ const changePurchaseUnitsService = async (
 
     if (productCart.units < 1) {
       productCart.units = 1;
-    } else if (productCart.units > 5 && !user.admin) {
+    } else if (productCart.units > 5 && !customer.admin) {
       throw new AppError(
         400,
         `[4021] Product with limited purchase quantity of ${5} units per customer`
@@ -43,13 +45,13 @@ const changePurchaseUnitsService = async (
     const productCartRepository = AppDataSource.getRepository(ProductCart);
     await productCartRepository.save(productCart);
 
-    user.cart.total_units = user.cart.productCart.reduce(
+    customer.cart.total_units = customer.cart.productCart.reduce(
       (acc, current) => current.units + acc,
       0
     );
 
-    user.cart.amount = Number(
-      user.cart.productCart
+    customer.cart.amount = Number(
+      customer.cart.productCart
         .reduce(
           (acc, current) => current.product.price * current.units + acc,
           0
@@ -57,18 +59,18 @@ const changePurchaseUnitsService = async (
         .toFixed(2)
     );
 
-    user.cart.shipping = user.cart.shipping;
+    customer.cart.shipping = customer.cart.shipping;
 
-    const numberOfInstallments = Number(user.cart.installment.split("")[3]);
+    const numberOfInstallments = Number(customer.cart.installment.split("")[3]);
     const installmentValue =
-      (user.cart.shipping + user.cart.amount) / numberOfInstallments;
+      (customer.cart.shipping + customer.cart.amount) / numberOfInstallments;
 
-    user.cart.installment = `Em ${numberOfInstallments}x de ${formatPrices(
+    customer.cart.installment = `Em ${numberOfInstallments}x de ${formatPrices(
       installmentValue
     )} sem juros`;
 
     const cartRepository = AppDataSource.getRepository(Cart);
-    await cartRepository.save(user.cart);
+    await cartRepository.save(customer.cart);
   }
 };
 

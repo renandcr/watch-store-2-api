@@ -17,7 +17,7 @@ class AddressController {
       phone,
       main,
     }: IAddress = req.body;
-    const { user_id } = req.params;
+    const { customer_id } = req.params;
 
     await addressCreateService({
       street,
@@ -29,7 +29,7 @@ class AddressController {
       zip_code,
       phone,
       main,
-      user_id,
+      customer_id,
     });
 
     return res.status(201).json({ message: "Successfully registered address" });
