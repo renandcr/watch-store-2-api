@@ -42,7 +42,7 @@ const removeProductFromCartService = async (
 
   cart!.amount = Number(
     cart!.productCart
-      .reduce((acc, current) => current.product.price * current.units + acc, 0)
+      .reduce((acc, current) => current.final_price * current.units + acc, 0)
       .toFixed(2)
   );
 
