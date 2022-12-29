@@ -1,8 +1,8 @@
 import ProductCart from "../../entities/productCart.entity";
 import { ICart } from "../../interfaces/cart.interface";
+import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import Customer from "../../entities/customer.entity";
 import Cart from "../../entities/cart.entity";
 import { formatPrices } from "../../methods";
 
@@ -48,7 +48,7 @@ const addProductToCartService = async (data: ICart): Promise<void> => {
 
   customer.cart.amount += Number(
     productList
-      .reduce((acc, current) => current.product.price * current.units + acc, 0)
+      .reduce((acc, current) => current.final_price * current.units + acc, 0)
       .toFixed(2)
   );
 
@@ -72,6 +72,7 @@ const addProductToCartService = async (data: ICart): Promise<void> => {
     productCart.customer = customer;
     productCart.product = productList[product].product;
     productCart.units = productList[product].units;
+    productCart.final_price = productList[product].final_price;
 
     await productCartRepository.save(productCart);
   }

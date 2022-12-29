@@ -52,10 +52,7 @@ const changePurchaseUnitsService = async (
 
     customer.cart.amount = Number(
       customer.cart.productCart
-        .reduce(
-          (acc, current) => current.product.price * current.units + acc,
-          0
-        )
+        .reduce((acc, current) => current.final_price * current.units + acc, 0)
         .toFixed(2)
     );
 

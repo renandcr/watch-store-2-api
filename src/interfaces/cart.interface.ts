@@ -1,12 +1,10 @@
 import Product from "../entities/product.entity";
-import Cart from "../entities/cart.entity";
-import Customer from "../entities/customer.entity";
 
 export interface ICart {
   customer_id: string;
   add_products: {
     request_type: string;
-    products: Array<{ units: number; product: Product }>;
+    products: Array<{ units: number; final_price: number; product: Product }>;
   };
 }
 
@@ -24,11 +22,4 @@ export interface ICartChangeUnits {
 export interface ICartChangeInstallments {
   installment: string;
   customer_id: string;
-}
-
-export interface IProductCart {
-  units: number;
-  product: Product;
-  cart: Cart;
-  customer: Customer;
 }
