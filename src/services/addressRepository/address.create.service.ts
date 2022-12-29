@@ -1,25 +1,27 @@
 import { IAddress } from "../../interfaces/address.interface";
+import Customer from "../../entities/customer.entity";
 import Address from "../../entities/address.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import User from "../../entities/user.entity";
 
 const addressCreateService = async (data: IAddress): Promise<void> => {
   const addressRepository = AppDataSource.getRepository(Address);
-  const userRepository = AppDataSource.getRepository(User);
-  const users = await userRepository.find();
-  const user = users.find((user) => user.id === data.user_id);
+  const customerRepository = AppDataSource.getRepository(Customer);
+  const customers = await customerRepository.find();
+  const customer = customers.find(
+    (customer) => customer.id === data.customer_id
+  );
 
-  if (!user)
+  if (!customer)
     throw new AppError(
       404,
-      "[4005] User not found. Address cannot be assigned to a non-existent user"
+      "[4005] Customer not found. Address cannot be assigned to a non-existent customer"
     );
 
-  if (user.addresses.length) {
-    for (let current in user.addresses) {
-      user.addresses[current].main = false;
-      await addressRepository.save(user.addresses[current]);
+  if (customer.addresses.length) {
+    for (let current in customer.addresses) {
+      customer.addresses[current].main = false;
+      await addressRepository.save(customer.addresses[current]);
     }
   }
 
@@ -35,7 +37,7 @@ const addressCreateService = async (data: IAddress): Promise<void> => {
   address.main = true;
   address.created_at = new Date();
   address.updated_at = new Date();
-  address.user = <User>user;
+  address.customer = <Customer>customer;
 
   await addressRepository.save(address);
 };

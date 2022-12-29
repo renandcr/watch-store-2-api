@@ -1,22 +1,22 @@
-import verifyUserAuthentication from "../middlewares/verifyUserAuthentication.middleware";
+import verifyCustomerAuthentication from "../middlewares/verifyCustomerAuthentication.middleware";
 import AddressController from "../controller/address.controller";
 import { Router } from "express";
 
 const addressRouter = () => {
   const router = Router();
   router.post(
-    "/create/:user_id",
-    verifyUserAuthentication,
+    "/create/:customer_id",
+    verifyCustomerAuthentication,
     AddressController.create
   );
   router.patch(
     "/update/:id",
-    verifyUserAuthentication,
+    verifyCustomerAuthentication,
     AddressController.update
   );
   router.delete(
     "/delete/:id",
-    verifyUserAuthentication,
+    verifyCustomerAuthentication,
     AddressController.delete
   );
 

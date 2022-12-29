@@ -1,17 +1,17 @@
-import verifyUserAuthentication from "../middlewares/verifyUserAuthentication.middleware";
+import verifyCustomerAuthentication from "../middlewares/verifyCustomerAuthentication.middleware";
 import PurchaseOrderController from "../controller/purchaseOrder.controller";
 import { Router } from "express";
 
 const purchaseOrderRouter = () => {
   const router = Router();
   router.post(
-    "/create/:user_id",
-    verifyUserAuthentication,
+    "/create/:customer_id",
+    verifyCustomerAuthentication,
     PurchaseOrderController.create
   );
   router.delete(
-    "/delete/:user_id/:request_id",
-    verifyUserAuthentication,
+    "/delete/:customer_id/:request_id",
+    verifyCustomerAuthentication,
     PurchaseOrderController.delete
   );
 

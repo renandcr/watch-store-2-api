@@ -2,7 +2,7 @@ import PurchaseOrder from "../entities/purchaseOrder.entity";
 import Address from "../entities/address.entity";
 import Cart from "../entities/cart.entity";
 
-export interface IUser {
+export interface ICustomer {
   name: string;
   last_name: string;
   email: string;
@@ -10,11 +10,11 @@ export interface IUser {
   password: string;
 }
 
-export interface IUserUpdate extends IUser {
-  user_id: string;
+export interface ICustomerUpdate extends ICustomer {
+  customer_id: string;
 }
 
-export interface IUserReturn {
+export interface ICustomerReturn {
   id: string;
   name: string;
   last_name: string;
@@ -28,11 +28,11 @@ export interface IUserReturn {
   purchaseOrders: Array<PurchaseOrder>;
 }
 
-export interface IUserLogin {
+export interface ICustomerLogin {
   email: string;
   password: string;
 }
 
-export interface IUserId {
-  user_id: string;
+export interface ICustomerId {
+  customer_id: string;
 }

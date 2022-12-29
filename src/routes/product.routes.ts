@@ -1,4 +1,4 @@
-import verifyUserAuthentication from "../middlewares/verifyUserAuthentication.middleware";
+import verifyCustomerAuthentication from "../middlewares/verifyCustomerAuthentication.middleware";
 import ProductController from "../controller/product.controller";
 import { storage } from "../methods/index";
 import { Router } from "express";
@@ -9,19 +9,19 @@ const productRouter = () => {
   const upload = multer({ storage: storage });
   router.post(
     "/create",
-    verifyUserAuthentication,
+    verifyCustomerAuthentication,
     upload.single("file"),
     ProductController.create
   );
   router.get("/list", ProductController.list);
   router.patch(
     "/update/:id",
-    verifyUserAuthentication,
+    verifyCustomerAuthentication,
     ProductController.update
   );
   router.delete(
     "/delete/:id",
-    verifyUserAuthentication,
+    verifyCustomerAuthentication,
     ProductController.delete
   );
 

@@ -5,19 +5,19 @@ import { AppError } from "../../errors/appError";
 
 const addressUpdateService = async (data: IAddressUpdate): Promise<void> => {
   const addressRepository = AppDataSource.getRepository(Address);
-  const usersRepository = await addressRepository.find({
+  const customersRepository = await addressRepository.find({
     relations: {
-      user: true,
+      customer: true,
     },
   });
 
-  const possibleAddress = usersRepository.find(
+  const possibleAddress = customersRepository.find(
     (address) => address.id === data.id
   );
 
   if (!possibleAddress) throw new AppError(404, "[4006] Address not found");
 
-  possibleAddress.user.addresses.map(async (address) => {
+  possibleAddress.customer.addresses.map(async (address) => {
     if (address.id !== data.id) {
       address.main = false;
       await addressRepository.save(address);
