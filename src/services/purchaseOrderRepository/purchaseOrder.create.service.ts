@@ -1,9 +1,9 @@
 import { IPurchaseOrderCreate } from "../../interfaces/purchaseOrder.interface";
 import PurchaseOrder from "../../entities/purchaseOrder.entity";
+import Customer from "../../entities/customer.entity";
 import Product from "../../entities/product.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import Customer from "../../entities/customer.entity";
 import Cart from "../../entities/cart.entity";
 
 const createPurchaseOrderService = async (
@@ -38,7 +38,16 @@ const createPurchaseOrderService = async (
 
   for (let current in customer.cart.productCart) {
     if (customer.cart.productCart[current].product.stock_quantity < 1) {
-      throw new AppError(400, "[4020] Product sold out in cart.");
+      throw new AppError(400, "[4020] Product sold out in cart");
+    } else if (
+      customer.cart.productCart[current].product.stock_quantity -
+        customer.cart.productCart[current].units <
+      0
+    ) {
+      throw new AppError(
+        400,
+        `[4024] Insufficient stock. ${customer.cart.productCart[current].product.id} has ${customer.cart.productCart[current].product.stock_quantity} units available for purchase`
+      );
     }
   }
 
@@ -68,6 +77,7 @@ const createPurchaseOrderService = async (
   customer.cart.productCart = [];
   customer.cart.amount = 0;
   customer.cart.total_units = 0;
+  customer.cart.shipping = 0;
   customer.cart.installment = "Em 1x de 0 sem juros";
 
   await cartRepository.save(customer.cart);

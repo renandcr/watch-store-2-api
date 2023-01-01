@@ -1,8 +1,8 @@
 import { ICartParams } from "../../interfaces/cart.interface";
 import ProductCart from "../../entities/productCart.entity";
+import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import Customer from "../../entities/customer.entity";
 import Cart from "../../entities/cart.entity";
 import { formatPrices } from "../../methods";
 

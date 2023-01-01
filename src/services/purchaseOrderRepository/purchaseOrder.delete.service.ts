@@ -1,8 +1,8 @@
 import { IPurchaseOrderDelete } from "../../interfaces/purchaseOrder.interface";
 import PurchaseOrder from "../../entities/purchaseOrder.entity";
+import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import Customer from "../../entities/customer.entity";
 
 const deletePurchaseOrderService = async ({
   customer_id,

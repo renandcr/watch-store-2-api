@@ -1,7 +1,7 @@
 import { ICustomerId } from "../../interfaces/customer.interface";
+import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import Customer from "../../entities/customer.entity";
 import Cart from "../../entities/cart.entity";
 
 const customerDeleteService = async ({

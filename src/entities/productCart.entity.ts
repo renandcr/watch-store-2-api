@@ -14,7 +14,7 @@ class ProductCart {
   @Column({ type: "float" })
   public final_price!: number;
 
-  @ManyToOne(() => Product, (product) => product.productCart, {
+  @ManyToOne(() => Product, {
     eager: true,
   })
   public product!: Product;

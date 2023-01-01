@@ -6,7 +6,7 @@ services:
     build: .
     command: yarn dev
     ports:
-      - 3000:3000
+      - 3001:3001
     environment:
       - DATABASE_URL=postgres://renandcr:1234@database:5432/watch_store_2_api
     volumes:
@@ -15,7 +15,7 @@ services:
       - database
 
   database:
-    container_name: postgress_database_container
+    container_name: postgres_database_container
     image: postgres:12
     ports:
       - 5433:5432

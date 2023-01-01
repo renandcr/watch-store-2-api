@@ -1,8 +1,8 @@
 import { ICartChangeUnits } from "../../interfaces/cart.interface";
 import ProductCart from "../../entities/productCart.entity";
+import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import Customer from "../../entities/customer.entity";
 import Cart from "../../entities/cart.entity";
 import { formatPrices } from "../../methods";
 
@@ -21,14 +21,19 @@ const changePurchaseUnitsService = async (
     (current) => current.id === data.productCart_id
   );
 
+  let conflictBetweenCarts = false;
+
   if (!productCart) {
     throw new AppError(404, "[4007] Product not found");
   } else {
     if (data.change_units.change_type === "cart_change") {
-      productCart.units += data.change_units.units;
+      if (productCart.product.stock_quantity - productCart.units < 0) {
+        conflictBetweenCarts = true;
+        productCart.units = productCart.product.stock_quantity;
+      } else productCart.units += data.change_units.units;
     } else productCart.units = data.change_units.units;
 
-    if (productCart.units < 1) {
+    if (productCart.units < 1 && !conflictBetweenCarts) {
       productCart.units = 1;
     } else if (productCart.units > 5 && !customer.admin) {
       throw new AppError(

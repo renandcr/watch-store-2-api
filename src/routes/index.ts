@@ -1,7 +1,7 @@
 import purchaseOrderRouter from "./purchaseOrder.routes";
+import customerRouter from "./customer.routes";
 import addressRouter from "./address.routes";
 import productRouter from "./product.routes";
-import customerRouter from "./customer.routes";
 import cartRouter from "./cart.routes";
 import { Express } from "express";
 
