@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS product(
 CREATE TABLE IF NOT EXISTS product_cart(
     id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     units INTEGER DEFAULT 1,
+    final_price FLOAT NOT NULL,
     "productId" uuid,
     FOREIGN KEY("productId") REFERENCES product(id),
     "cartId" uuid,
@@ -64,9 +65,7 @@ CREATE TABLE IF NOT EXISTS purchase_order(
     shipping FLOAT NOT NULL,
     created_at TIMESTAMP NOT NULL,
     "customerId" uuid,
-    FOREIGN KEY("customerId") REFERENCES customer(id) ON DELETE CASCADE,
-    "productCartId" uuid,
-    FOREIGN KEY("productCartId") REFERENCES product_cart(id) ON DELETE CASCADE);
+    FOREIGN KEY("customerId") REFERENCES customer(id) ON DELETE CASCADE);
 
 CREATE TABLE IF NOT EXISTS purchase_order_products_product_cart(
     "purchaseOrderId"  uuid,

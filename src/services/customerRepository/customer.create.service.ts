@@ -1,12 +1,13 @@
-import {
-  ICustomer,
-  ICustomerReturn,
-} from "../../interfaces/customer.interface";
+import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import Customer from "../../entities/customer.entity";
 import Cart from "../../entities/cart.entity";
 import bcrypt from "bcrypt";
+
+import {
+  ICustomerReturn,
+  ICustomer,
+} from "../../interfaces/customer.interface";
 
 const createCustomerService = async (
   data: ICustomer

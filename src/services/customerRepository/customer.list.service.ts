@@ -1,6 +1,6 @@
 import { ICustomerReturn } from "../../interfaces/customer.interface";
-import { AppDataSource } from "../../data-source";
 import Customer from "../../entities/customer.entity";
+import { AppDataSource } from "../../data-source";
 
 const customerListService = async (): Promise<Array<ICustomerReturn>> => {
   const customerRepository = AppDataSource.getRepository(Customer);

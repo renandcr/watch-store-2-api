@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import Customer from "../entities/customer.entity";
 import { AppDataSource } from "../data-source";
 import { AppError } from "../errors/appError";
-import Customer from "../entities/customer.entity";
 import jwt from "jsonwebtoken";
 
 /*

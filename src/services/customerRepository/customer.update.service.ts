@@ -1,11 +1,12 @@
+import Customer from "../../entities/customer.entity";
+import { AppDataSource } from "../../data-source";
+import { AppError } from "../../errors/appError";
+import bcrypt from "bcrypt";
+
 import {
   ICustomerReturn,
   ICustomerUpdate,
 } from "../../interfaces/customer.interface";
-import { AppDataSource } from "../../data-source";
-import { AppError } from "../../errors/appError";
-import Customer from "../../entities/customer.entity";
-import bcrypt from "bcrypt";
 
 const customerUpdateServices = async (
   data: ICustomerUpdate

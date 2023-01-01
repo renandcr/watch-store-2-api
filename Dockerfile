@@ -1,6 +1,6 @@
 FROM node:16
 
-ENV PORT=3000
+ENV PORT=3001
 
 RUN apt-get update
 
@@ -12,7 +12,7 @@ RUN yarn
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3001
 
 USER node
 
