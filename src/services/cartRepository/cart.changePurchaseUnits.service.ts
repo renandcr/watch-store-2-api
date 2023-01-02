@@ -27,7 +27,11 @@ const changePurchaseUnitsService = async (
     throw new AppError(404, "[4007] Product not found");
   } else {
     if (data.change_units.change_type === "cart_change") {
-      if (productCart.product.stock_quantity - productCart.units < 0) {
+      if (
+        productCart.product.stock_quantity - productCart.units < 0 ||
+        (productCart.product.stock_quantity === 0 &&
+          data.change_units.units === -1)
+      ) {
         conflictBetweenCarts = true;
         productCart.units = productCart.product.stock_quantity;
       } else productCart.units += data.change_units.units;
