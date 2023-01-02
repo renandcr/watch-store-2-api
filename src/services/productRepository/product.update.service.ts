@@ -10,6 +10,12 @@ const productUpdateService = async (data: IProductUpdate): Promise<Product> => {
 
   if (!product) throw new AppError(404, "[4007] Product not found");
 
+  for (let current in products) {
+    if (products[current].reference === data.reference) {
+      throw new AppError(409, "There is already a product with this reference");
+    }
+  }
+
   product.img = data.img;
   product.reference = data.reference;
   product.description = data.description;

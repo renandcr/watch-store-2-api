@@ -1,19 +1,21 @@
 import ProductCart from "../../entities/productCart.entity";
 import { ICart } from "../../interfaces/cart.interface";
+import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import User from "../../entities/user.entity";
 import Cart from "../../entities/cart.entity";
 import { formatPrices } from "../../methods";
 
 const addProductToCartService = async (data: ICart): Promise<void> => {
-  const userRepository = AppDataSource.getRepository(User);
-  const users = await userRepository.find();
-  const user = users.find((user) => user.id === data.user_id);
+  const customerRepository = AppDataSource.getRepository(Customer);
+  const customers = await customerRepository.find();
+  const customer = customers.find(
+    (customer) => customer.id === data.customer_id
+  );
 
-  if (!user) throw new AppError(404, "[4004] User not found");
+  if (!customer) throw new AppError(404, "[4004] Customer not found");
 
-  const possibleRepeatProduct = user.cart.productCart.filter((current) => {
+  const possibleRepeatProduct = customer.cart.productCart.filter((current) => {
     return data.add_products.products.find(
       (item) => current.product.id === item.product.id
     );
@@ -39,37 +41,38 @@ const addProductToCartService = async (data: ICart): Promise<void> => {
     }
   });
 
-  user.cart.total_units += productList.reduce(
+  customer.cart.total_units += productList.reduce(
     (acc, current) => current.units + acc,
     0
   );
 
-  user.cart.amount += Number(
+  customer.cart.amount += Number(
     productList
-      .reduce((acc, current) => current.product.price * current.units + acc, 0)
+      .reduce((acc, current) => current.final_price * current.units + acc, 0)
       .toFixed(2)
   );
 
-  user.cart.shipping = 28.9;
+  customer.cart.shipping = 28.9;
 
-  const numberOfInstallments = Number(user.cart.installment.split("")[3]);
+  const numberOfInstallments = Number(customer.cart.installment.split("")[3]);
   const installmentValue =
-    (user.cart.shipping + user.cart.amount) / numberOfInstallments;
+    (customer.cart.shipping + customer.cart.amount) / numberOfInstallments;
 
-  user.cart.installment = `Em ${numberOfInstallments}x de ${formatPrices(
+  customer.cart.installment = `Em ${numberOfInstallments}x de ${formatPrices(
     installmentValue
   )} sem juros`;
 
   const cartRepository = AppDataSource.getRepository(Cart);
-  await cartRepository.save(user.cart);
+  await cartRepository.save(customer.cart);
 
   const productCartRepository = AppDataSource.getRepository(ProductCart);
   for (let product in productList) {
     const productCart = new ProductCart();
-    productCart.cart = user.cart;
-    productCart.user = user;
+    productCart.cart = customer.cart;
+    productCart.customer = customer;
     productCart.product = productList[product].product;
     productCart.units = productList[product].units;
+    productCart.final_price = productList[product].final_price;
 
     await productCartRepository.save(productCart);
   }

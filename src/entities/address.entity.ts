@@ -1,5 +1,5 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from "typeorm";
-import User from "./user.entity";
+import Customer from "./customer.entity";
 
 @Entity()
 class Address {
@@ -39,10 +39,10 @@ class Address {
   @Column({ type: "timestamp" })
   updated_at: Date;
 
-  @ManyToOne(() => User, (user) => user.addresses, {
+  @ManyToOne(() => Customer, (customer) => customer.addresses, {
     onDelete: "CASCADE",
   })
-  user: User;
+  customer: Customer;
 }
 
 export default Address;

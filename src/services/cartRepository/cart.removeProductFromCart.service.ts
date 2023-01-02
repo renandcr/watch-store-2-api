@@ -1,27 +1,29 @@
 import { ICartParams } from "../../interfaces/cart.interface";
 import ProductCart from "../../entities/productCart.entity";
+import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import User from "../../entities/user.entity";
 import Cart from "../../entities/cart.entity";
 import { formatPrices } from "../../methods";
 
 const removeProductFromCartService = async (
   data: ICartParams
 ): Promise<void> => {
-  const userRepository = AppDataSource.getRepository(User);
-  const users = await userRepository.find();
-  const user = users.find((user) => user.id === data.user_id);
+  const customerRepository = AppDataSource.getRepository(Customer);
+  const customers = await customerRepository.find();
+  const customer = customers.find(
+    (customer) => customer.id === data.customer_id
+  );
 
-  if (!user) throw new AppError(404, "[4004] User not found");
+  if (!customer) throw new AppError(404, "[4004] Customer not found");
 
   const productCartRepository = AppDataSource.getRepository(ProductCart);
 
   let productFound = false;
-  for (let current in user.cart.productCart) {
-    if (user.cart.productCart[current].product.id === data.product_id) {
+  for (let current in customer.cart.productCart) {
+    if (customer.cart.productCart[current].product.id === data.product_id) {
       productFound = true;
-      await productCartRepository.remove(user.cart.productCart[current]);
+      await productCartRepository.remove(customer.cart.productCart[current]);
       break;
     }
   }
@@ -29,7 +31,9 @@ const removeProductFromCartService = async (
   if (!productFound) throw new AppError(404, "[4007] Product not found");
 
   const cartRepository = AppDataSource.getRepository(Cart);
-  const cart = await cartRepository.findOne({ where: { id: user.cart.id } });
+  const cart = await cartRepository.findOne({
+    where: { id: customer.cart.id },
+  });
 
   cart!.total_units = cart!.productCart.reduce(
     (acc, current) => current.units + acc,
@@ -38,7 +42,7 @@ const removeProductFromCartService = async (
 
   cart!.amount = Number(
     cart!.productCart
-      .reduce((acc, current) => current.product.price * current.units + acc, 0)
+      .reduce((acc, current) => current.final_price * current.units + acc, 0)
       .toFixed(2)
   );
 

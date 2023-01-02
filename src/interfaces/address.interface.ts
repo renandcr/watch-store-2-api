@@ -8,7 +8,7 @@ export interface IAddress {
   zip_code: string;
   phone: string;
   main: boolean;
-  user_id: string;
+  customer_id: string;
 }
 
 export interface IAddressUpdate {

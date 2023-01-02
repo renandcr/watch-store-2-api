@@ -1,20 +1,20 @@
 import { Request, Response, NextFunction } from "express";
+import Customer from "../entities/customer.entity";
 import { AppDataSource } from "../data-source";
 import { AppError } from "../errors/appError";
-import User from "../entities/user.entity";
 import jwt from "jsonwebtoken";
 
 /*
 Administrador tem total liberdade de acesso.
 Usuário pode acessar somente seu perfil e endereço.
 */
-const verifyUserAuthentication = async (
+const verifyCustomerAuthentication = async (
   req: Request,
   _: Response,
   next: NextFunction
 ) => {
   const token = req.headers.authorization?.split(" ")[1];
-  let loggedInUserId = "";
+  let loggedInCustomerId = "";
 
   if (token) {
     jwt.verify(
@@ -23,30 +23,30 @@ const verifyUserAuthentication = async (
       (errors, encoded: any) => {
         if (errors) throw new AppError(406, "[4017] Invalid token");
 
-        loggedInUserId = encoded["id_token"];
+        loggedInCustomerId = encoded["id_token"];
       }
     );
   } else {
     throw new AppError(401, "[4000] Request is missing token");
   }
 
-  const userRepository = AppDataSource.getRepository(User);
-  const user = await userRepository.findOneBy({
-    id: loggedInUserId,
+  const customerRepository = AppDataSource.getRepository(Customer);
+  const customer = await customerRepository.findOneBy({
+    id: loggedInCustomerId,
   });
 
-  if (!user) throw new AppError(500, "[4016] Internal server error");
+  if (!customer) throw new AppError(500, "[4016] Internal server error");
 
   const isAddressRoute = req.originalUrl.replace(/[/]/gi, " ").split(" ");
 
-  if (user["admin"]) return next();
+  if (customer["admin"]) return next();
   else if (isAddressRoute[2] === "product")
     throw new AppError(401, "[4022] You are not authorized for this activity");
-  else if (loggedInUserId === req.params["user_id"]) return next();
+  else if (loggedInCustomerId === req.params["customer_id"]) return next();
   else if (isAddressRoute[2] === "address") {
     if (
       isAddressRoute[3] === "create" &&
-      loggedInUserId !== req.params["user_id"]
+      loggedInCustomerId !== req.params["customer_id"]
     ) {
       throw new AppError(
         401,
@@ -56,10 +56,10 @@ const verifyUserAuthentication = async (
       isAddressRoute[3] === "update" ||
       isAddressRoute[3] === "delete"
     ) {
-      const userAddress = user.addresses.find(
+      const customerAddress = customer.addresses.find(
         (address) => address.id === req.params["id"]
       );
-      if (!userAddress) {
+      if (!customerAddress) {
         throw new AppError(
           401,
           "[4018] You are not authorized to access or make changes to other accounts"
@@ -68,7 +68,7 @@ const verifyUserAuthentication = async (
         return next();
       }
     }
-  } else if (!req.params["user_id"] && !user["admin"]) {
+  } else if (!req.params["customer_id"] && !customer["admin"]) {
     throw new AppError(
       401,
       "[4018] You are not authorized to access or make changes to other accounts"
@@ -81,4 +81,4 @@ const verifyUserAuthentication = async (
   }
 };
 
-export default verifyUserAuthentication;
+export default verifyCustomerAuthentication;

@@ -1,34 +1,25 @@
 import Product from "../entities/product.entity";
-import Cart from "../entities/cart.entity";
-import User from "../entities/user.entity";
 
 export interface ICart {
-  user_id: string;
+  customer_id: string;
   add_products: {
     request_type: string;
-    products: Array<{ units: number; product: Product }>;
+    products: Array<{ units: number; final_price: number; product: Product }>;
   };
 }
 
 export interface ICartParams {
-  user_id: string;
+  customer_id: string;
   product_id: string;
 }
 
 export interface ICartChangeUnits {
-  user_id: string;
+  customer_id: string;
   productCart_id: string;
   change_units: { change_type: string; units: number };
 }
 
 export interface ICartChangeInstallments {
   installment: string;
-  user_id: string;
-}
-
-export interface IProductCart {
-  units: number;
-  product: Product;
-  cart: Cart;
-  user: User;
+  customer_id: string;
 }

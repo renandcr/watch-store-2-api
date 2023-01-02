@@ -1,20 +1,20 @@
 import { IPurchaseOrderDelete } from "../../interfaces/purchaseOrder.interface";
 import PurchaseOrder from "../../entities/purchaseOrder.entity";
+import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import User from "../../entities/user.entity";
 
 const deletePurchaseOrderService = async ({
-  user_id,
+  customer_id,
   request_id,
 }: IPurchaseOrderDelete): Promise<void> => {
-  const userRepository = AppDataSource.getRepository(User);
-  const users = await userRepository.find();
-  const user = users.find((user) => user.id === user_id);
+  const customerRepository = AppDataSource.getRepository(Customer);
+  const customers = await customerRepository.find();
+  const customer = customers.find((customer) => customer.id === customer_id);
 
-  if (!user) throw new AppError(404, "[4004] User not found");
+  if (!customer) throw new AppError(404, "[4004] Customer not found");
 
-  const purchaseOrder = user.purchaseOrders.find(
+  const purchaseOrder = customer.purchaseOrders.find(
     (request) => request.id === request_id
   );
 

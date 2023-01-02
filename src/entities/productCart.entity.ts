@@ -1,7 +1,7 @@
 import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from "typeorm";
+import Customer from "./customer.entity";
 import Product from "./product.entity";
 import Cart from "./cart.entity";
-import User from "./user.entity";
 
 @Entity()
 class ProductCart {
@@ -11,7 +11,10 @@ class ProductCart {
   @Column({ type: "integer", default: 1 })
   public units!: number;
 
-  @ManyToOne(() => Product, (product) => product.productCart, {
+  @Column({ type: "float" })
+  public final_price!: number;
+
+  @ManyToOne(() => Product, {
     eager: true,
   })
   public product!: Product;
@@ -19,10 +22,10 @@ class ProductCart {
   @ManyToOne(() => Cart, (cart) => cart.productCart)
   public cart!: Cart;
 
-  @ManyToOne(() => User, (user) => user.productCart, {
+  @ManyToOne(() => Customer, (customer) => customer.productCart, {
     onDelete: "CASCADE",
   })
-  public user!: User;
+  public customer!: Customer;
 }
 
 export default ProductCart;
