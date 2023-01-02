@@ -3,7 +3,10 @@ require("dotenv").config();
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  url: process.env.DATABASE_URL,
+  url:
+    process.env.NODE_ENV === "production"
+      ? process.env.DATABASE_URL
+      : process.env.DATABASE_DEV_URL,
   ssl:
     process.env.NODE_ENV === "production"
       ? { rejectUnauthorized: false }
