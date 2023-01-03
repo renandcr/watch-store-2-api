@@ -4,14 +4,10 @@ import appRoutes from "./routes";
 import express from "express";
 import "express-async-errors";
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 export const PORT = process.env.PORT || 3333;
-export const WEBSITE_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://watchstore2.vercel.app"
-    : "https://watch-store-design-git-developer-renandcr.vercel.app";
+export const WEBSITE_URL = "https://watchstore2.vercel.app";
 
 app.use("/watch_store/product", express.static("src/uploads"));
 app.use(cors());
