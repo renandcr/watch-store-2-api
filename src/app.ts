@@ -7,7 +7,7 @@ const cors = require("cors");
 
 const app = express();
 export const PORT = process.env.PORT || 3333;
-export const WEBSITE_URL = "https://watchstore2.vercel.app";
+export const API_URL = "https://watch-store-2-api-production.up.railway.app";
 
 app.use("/watch_store/product", express.static("src/uploads"));
 app.use(cors());
