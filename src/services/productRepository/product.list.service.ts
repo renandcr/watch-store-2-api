@@ -1,6 +1,6 @@
 import Product from "../../entities/product.entity";
 import { AppDataSource } from "../../data-source";
-import { PORT } from "../../app";
+import { API_URL } from "../../app";
 
 const productListService = async (): Promise<Array<Product>> => {
   const productsRepository = AppDataSource.getRepository(Product);
@@ -9,7 +9,7 @@ const productListService = async (): Promise<Array<Product>> => {
   for (let product in products) {
     products[
       product
-    ].img = `http://localhost:${PORT}/watch_store/product/${products[product].img}`;
+    ].img = `${API_URL}/watch_store/product/${products[product].img}`;
   }
 
   return products;

@@ -8,7 +8,7 @@ services:
     ports:
       - 3001:3001
     environment:
-      - DATABASE_URL=postgres://renandcr:1234@database:5432/watch_store_2_api
+      - DATABASE_DEV_URL=postgres://renandcr:1234@database:5432/watch_store_2_api
     volumes:
       - .:/app
     depends_on:

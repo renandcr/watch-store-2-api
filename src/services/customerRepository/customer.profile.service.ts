@@ -1,7 +1,7 @@
 import Customer from "../../entities/customer.entity";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
-import { PORT } from "../../app";
+import { API_URL } from "../../app";
 
 import {
   ICustomerReturn,
@@ -23,7 +23,7 @@ const customerProfileService = async ({
     for (let current in customer.cart.productCart) {
       customer.cart.productCart[
         current
-      ].product.img = `http://localhost:${PORT}/watch_store/product/${customer.cart.productCart[current].product.img}`;
+      ].product.img = `${API_URL}/watch_store/product/${customer.cart.productCart[current].product.img}`;
     }
   }
 
@@ -32,7 +32,7 @@ const customerProfileService = async ({
       for (let item in customer.purchaseOrders[order].products) {
         customer.purchaseOrders[order].products[
           item
-        ].product.img = `http://localhost:${PORT}/watch_store/product/${customer.purchaseOrders[order].products[item].product.img}`;
+        ].product.img = `${API_URL}/watch_store/product/${customer.purchaseOrders[order].products[item].product.img}`;
       }
     }
   }
