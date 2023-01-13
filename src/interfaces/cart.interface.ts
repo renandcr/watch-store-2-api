@@ -20,6 +20,6 @@ export interface ICartChangeUnits {
 }
 
 export interface ICartChangeInstallments {
-  installment: string;
+  installment: number;
   customer_id: string;
 }
