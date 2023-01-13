@@ -1,5 +1,6 @@
 import { ICartChangeInstallments } from "../../interfaces/cart.interface";
 import Customer from "../../entities/customer.entity";
+import { formatPrices } from "../../methods/index";
 import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import Cart from "../../entities/cart.entity";
@@ -13,7 +14,12 @@ const changeInstallmentsService = async (data: ICartChangeInstallments) => {
 
   if (!customer) throw new AppError(404, "[4004] Customer not found");
 
-  customer.cart.installment = data.installment;
+  const totalPrice = customer.cart.amount + customer.cart.shipping;
+  const installment = `Em ${data.installment}x de R$ ${formatPrices(
+    totalPrice / data.installment
+  )} sem juros`;
+
+  customer.cart.installment = installment;
 
   const cartRepository = AppDataSource.getRepository(Cart);
 
