@@ -1740,7 +1740,7 @@ Status code
 
 ## Quick start
 
-To run a project in React, you will need to have [node.js](https://nodejs.org/en/) installed on your machine. In addition, you will also need a good code editor. My suggestion is the [Visual Studio Code](https://code.visualstudio.com/).
+To run this project on your machine you need a good code editor. My suggestion is the [Visual Studio Code](https://code.visualstudio.com/).
 
 Clone the remote repository on your machine:
 
@@ -1774,20 +1774,16 @@ code .
 
 <br>
 
-Copy the information that is in the .env.example file. Create an .env file and paste the information that was copied into it. After that, create a secret key of your choice and fill the database information with your personal details.
+Follow the instructions described in the .env.example file and add all environment variables inside an .env file. For this, you will need to create an .env file in the root of the project:
 
-```
-SECRET_KEY="**************************"
-DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
-DATABASE_DEV_URL="postgres://username:password@localhost:5432/database_name"
-```
+<img alt="Example of directories" src="src/assets/readme/images/example_of_directories.png"/>
 
 <br>
 
-In your text editor terminal, run the server:
+To run the API and database inside docker containers, run the following command in your terminal:
 
 ```
-yarn start
+docker compose up
 ```
 
 Use "Ctrl + C" to stop the server.
