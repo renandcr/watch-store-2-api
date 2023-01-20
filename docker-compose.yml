@@ -1,16 +1,18 @@
 version: "3"
 services:
   api_express:
+    build: .
     container_name: node_express_api_container
     image: node_express_api_image
-    build: .
     command: yarn dev
     ports:
       - 3001:3001
     environment:
       - DATABASE_DEV_URL=${DATABASE_DEV_URL}
     volumes:
-      - .:/app
+      - /usr/app/node_modules
+      - ./src:/usr/app/src
+      - ./build:/usr/app/build
     depends_on:
       - database
 
