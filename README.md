@@ -24,23 +24,23 @@
 
 <br>
 
-### 🏁 Index
+### Index
 
-- [🛠️ Technologies used](#️-technologies-used)
-- [🗺️ ER Diagram](#️-er-diagram)
-- [📜 Documentation](#-documentation)
+- [Technologies used](#️-technologies-used)
+- [ER Diagram](#️-er-diagram)
+- [Documentation](#-documentation)
   - [Base URL](#base-url)
-  - [🔴 Customer](#-customer)
+  - [Customer](#-customer)
     - [1 - Endpoints](#1---endpoints)
-  - [🔴 Product](#-product)
+  - [Product](#-product)
     - [2 - Endpoints](#2---endpoints)
-  - [🔴 Cart](#-cart)
+  - [Cart](#-cart)
     - [3 - Endpoints](#3---endpoints)
-  - [🔴 Address](#-address)
+  - [Address](#-address)
     - [4 - Endpoints](#4---endpoints)
-  - [🔴 Purchase Order](#-purchase-order)
+  - [Purchase Order](#-purchase-order)
     - [5 - Endpoints](#5---endpoints)
-- [Quick start](#quick-start)
+- [Quick start](#-quick-start)
 - [Author](#author)
 - [License](#license)
 
@@ -535,7 +535,7 @@ Status code
 
 ### 🔴 Product
 
-[⬆️ back to index](#index)
+[back to index](#index)
 
 #### 2 - Endpoints
 
@@ -934,7 +934,7 @@ Status code
 
 ---
 
-<h3>👉 /cart/add/:customer_id</h3>
+<h3>👉 /watch_store/cart/add/:customer_id</h3>
 
 [back to Endpoints](#3---endpoints)
 
@@ -1033,7 +1033,7 @@ Status Code
 
 <br>
 
-<h3>👉 /cart/remove/:customer_id/:product_id</h3>
+<h3>👉 /watch_store/cart/remove/:customer_id/:product_id</h3>
 
 [back to Endpoints](#3---endpoints)
 
@@ -1099,27 +1099,9 @@ Status code
 
 <br>
 
-<h3>Response returned for product that already exists in the cart</h3>
-
-Status Code
-
-```
-409 Conflict
-```
-
-```json
-{
-  "status": "error",
-  "code": 409,
-  "message": "[4013] This product is already in the cart"
-}
-```
-
 <br>
 
-<br>
-
-<h3>👉 /cart/change_units/:customer_id/:productCart_id</h3>
+<h3>👉 /watch_store/cart/change_units/:customer_id/:productCart_id</h3>
 
 [back to Endpoints](#3---endpoints)
 
@@ -1180,7 +1162,7 @@ Status code
 
 <br>
 
-<h3>Response returned for incorrect product ID or if this product does not exist in cart</h3>
+<h3>Response returned for incorrect product id or if this product does not exist in cart</h3>
 
 Status code
 
@@ -1236,7 +1218,7 @@ Status code
 
 <br>
 
-<h3>👉 /cart/change_installments/:customer_id</h3>
+<h3>👉 /watch_store/cart/change_installments/:customer_id</h3>
 
 [back to Endpoints](#3---endpoints)
 
@@ -1293,7 +1275,7 @@ Status code
 
 ### 🔴 Address
 
-[⬆️ back to index](#index)
+[back to index](#index)
 
 #### 4 - Endpoints
 
@@ -1530,14 +1512,14 @@ Status code
 
 ### 🔴 Purchase Order
 
-[⬆️ back to index](#index)
+[back to index](#index)
 
 #### 5 - Endpoints
 
 | Method | Route                                           | Description                                                                            |
 | ------ | ----------------------------------------------- | -------------------------------------------------------------------------------------- |
 | POST   | /watch_store/purchase-order/create/:customer_id | Create purchase order. User id must be provided.                                       |
-| DELETE | /watch_store/delete/:customer_id/:request_id    | Delete purchase order. The user id followed by the purchase order id must be provided. |
+| DELETE | /watch_store/purchase-order/delete/:customer_id/:request_id    | Delete purchase order. The user id followed by the purchase order id must be provided. |
 
 <br>
 
@@ -1607,7 +1589,7 @@ Status code
 
 <br>
 
-<h3>Response returned to the user who does not yet have a registered address or who has not selected a delivery address.</h3>
+<h3>Response returned to the user who does not yet have a registered address or who has not selected a delivery address</h3>
 
 Status code
 
@@ -1665,14 +1647,14 @@ Status code
 
 <br>
 
-<h3>👉 /watch_store/delete/:customer_id/:request_id</h3>
+<h3>👉 /watch_store/purchase-order/delete/:customer_id/:request_id</h3>
 
 [back to Endpoints](#5---endpoints)
 
 <h3>Request information</h3>
 
 ```
-POST /watch_store/delete/:customer_id/:request_id
+DELETE /watch_store/purchase-order/delete/:customer_id/:request_id
 Host: watch-store-2-api-production.up.railway.app
 Authorization: Bearer Token
 ```
@@ -1733,7 +1715,7 @@ Status code
 
 <br>
 
-## Quick start
+## 💻 Quick start
 
 To run this project you will need a good code editor, my suggestion is [Visual Studio Code](https://code.visualstudio.com/). In addition, you will also need to have [docker](https://docs.docker.com/engine/install/) installed on your machine.
 
@@ -1796,7 +1778,7 @@ Renan Ribeiro 🚀
 
 Made with ❤️ by Renan Ribeiro 👋 Get in touch!
 
-![WHATSAPP](<https://img.shields.io/badge/(43)996935385-25D366?style=flat-square&logo=whatsapp&logoColor=white>)
+![WHATSAPP](<https://img.shields.io/badge/+55(43)996935385-25D366?style=flat-square&logo=whatsapp&logoColor=white>)
 ![GMAIL](https://img.shields.io/badge/renandcribeiro@gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)
 <a href="https://www.linkedin.com/in/renandcr">
 <img src="https://img.shields.io/badge/Renan-0077B5?style=flat-square&logo=linkedin&logoColor=white"/></a>
