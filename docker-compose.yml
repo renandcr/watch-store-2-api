@@ -1,16 +1,18 @@
 version: "3"
 services:
   api_express:
+    build: .
     container_name: node_express_api_container
     image: node_express_api_image
-    build: .
     command: yarn dev
     ports:
       - 3001:3001
     environment:
-      - DATABASE_DEV_URL=postgres://renandcr:1234@database:5432/watch_store_2_api
+      - DATABASE_DEV_URL=${DATABASE_DEV_URL}
     volumes:
-      - .:/app
+      - /usr/app/node_modules
+      - ./src:/usr/app/src
+      - ./build:/usr/app/build
     depends_on:
       - database
 
@@ -18,10 +20,10 @@ services:
     container_name: postgres_database_container
     image: postgres:12
     ports:
-      - 5433:5432
+      - 5432:5432
     environment:
-      - POSTGRES_USER=renandcr
-      - POSTGRES_PASSWORD=1234
-      - POSTGRES_DB=watch_store_2_api
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql

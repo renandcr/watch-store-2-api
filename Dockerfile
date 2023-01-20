@@ -1,12 +1,14 @@
 FROM node:16
 
+WORKDIR /usr/app
+
 ENV PORT=3001
 
 RUN apt-get update
 
-WORKDIR /app
+COPY package*.json ./
 
-COPY package.json yarn.lock ./
+COPY yarn.lock ./
 
 RUN yarn
 
