@@ -5,19 +5,18 @@
 
 ### Project description
 
-⌚Watch Store - is a multi-featured e-commerce website. The project consists of two parts, an API and an interface developed in React. [Access the interface repository here](https://github.com/renandcr/watch-store-design).
+⌚Watch Store - is a multi-featured e-commerce website. The project consists of two parts, a node.js API and an interface developed in React. [Access the interface repository here](https://github.com/renandcr/watch-store-design).
 
 <br>
 
-![Version](https://img.shields.io/badge/version-v2.0.0-blue)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/renandcr/watch-store-design?color=orange)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fwatchstore2.vercel.app%2F)
-![GitHub repo size](https://img.shields.io/github/repo-size/renandcr/watch-store-design)
-![GitHub repo file count](https://img.shields.io/github/directory-file-count/renandcr/watch-store-design)
-![GitHub language count](https://img.shields.io/github/languages/count/renandcr/watch-store-design)
-![GitHub top language](https://img.shields.io/github/languages/top/renandcr/watch-store-design)
 ![npm](https://img.shields.io/npm/v/yarn?label=yarn&logoColor=red)
-![GitHub](https://img.shields.io/github/license/renandcr/watch-store-design)
+![Debian](https://img.shields.io/badge/Ubuntu-20.04-brightgreen)
+![GitHub repo size](https://img.shields.io/github/repo-size/renandcr/watch-store-2-api)
+![GitHub repo file count](https://img.shields.io/github/directory-file-count/renandcr/watch-store-2-api)
+![Lines of code](https://img.shields.io/tokei/lines/github.com/renandcr/watch-store-2-api)
+![GitHub top language](https://img.shields.io/github/languages/top/renandcr/watch-store-2-api)
+![GitHub language count](https://img.shields.io/github/languages/count/renandcr/watch-store-2-api)
+![GitHub](https://img.shields.io/github/license/renandcr/watch-store-2-api)
 
 <br>
 
@@ -1732,15 +1731,11 @@ Status code
 
 <br>
 
----
-
----
-
----
+<br>
 
 ## Quick start
 
-To run this project on your machine you need a good code editor. My suggestion is the [Visual Studio Code](https://code.visualstudio.com/).
+To run this project you will need a good code editor, my suggestion is [Visual Studio Code](https://code.visualstudio.com/). In addition, you will also need to have [docker](https://docs.docker.com/engine/install/) installed on your machine.
 
 Clone the remote repository on your machine:
 
@@ -1758,23 +1753,7 @@ cd watch-store-2-api
 
 <br>
 
-Lembre de pesquisar sobre o comando yarn updated ou apt-update, ou até mesmo usar "yarn upgrade" diretamente no dockerfile, eliminando a necessidade do usuário ter que executar este comando:
-
-```
-yarn upgrade
-```
-
-<!-- <br>
-
-Install in your local repository the project dependencies:
-
-```
-yarn
-``` -->
-
-<br>
-
-Open the text editor in the project's root folder:
+Open the code editor in the project's root folder:
 
 ```
 code .
@@ -1788,11 +1767,19 @@ Follow the instructions described in the .env.example file and add all environme
 
 <br>
 
-To run the API and database inside docker containers, run the following command in your terminal:
+Run the following command in the terminal to run the cloud project:
 
 ```
 docker compose up
 ```
+
+<br>
+
+If all goes well, you should see this:
+
+<img alt="Example of directories" src="src/assets/readme/images/run_docker_compose.png"/>
+
+Ready, the project is running in a docker container with all the necessary dependencies for its operation.
 
 Use "Ctrl + C" to stop the server.
 
