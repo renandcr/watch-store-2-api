@@ -1756,6 +1756,14 @@ Enter the local repository:
 cd watch-store-2-api
 ```
 
+<br>
+
+Lembre de pesquisar sobre o comando yarn updated ou apt-update, ou até mesmo usar "yarn upgrade" diretamente no dockerfile, eliminando a necessidade do usuário ter que executar este comando:
+
+```
+yarn upgrade
+```
+
 <!-- <br>
 
 Install in your local repository the project dependencies:
