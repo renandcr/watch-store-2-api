@@ -21,7 +21,7 @@ const cartRouter = () => {
   );
 
   router.patch(
-    "/change_installments/:customer_id/",
+    "/change_installments/:customer_id",
     verifyCustomerAuthentication,
     CartController.changeInstallments
   );
