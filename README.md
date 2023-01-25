@@ -9,6 +9,7 @@
 
 <br>
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/renandcr/watch-store-2-api?color=orange)
 ![npm](https://img.shields.io/npm/v/yarn?label=yarn&logoColor=red)
 ![Debian](https://img.shields.io/badge/Ubuntu-20.04-brightgreen)
 ![GitHub repo size](https://img.shields.io/github/repo-size/renandcr/watch-store-2-api)
