@@ -13,7 +13,6 @@
 ![Debian](https://img.shields.io/badge/Ubuntu-20.04-brightgreen)
 ![GitHub repo size](https://img.shields.io/github/repo-size/renandcr/watch-store-2-api)
 ![GitHub repo file count](https://img.shields.io/github/directory-file-count/renandcr/watch-store-2-api)
-![Lines of code](https://img.shields.io/tokei/lines/github.com/renandcr/watch-store-2-api)
 ![GitHub top language](https://img.shields.io/github/languages/top/renandcr/watch-store-2-api)
 ![GitHub language count](https://img.shields.io/github/languages/count/renandcr/watch-store-2-api)
 ![GitHub](https://img.shields.io/github/license/renandcr/watch-store-2-api)
