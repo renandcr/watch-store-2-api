@@ -87,7 +87,7 @@ https://watch-store-2-api-production.up.railway.app - (tip: add an endpoint at t
 
 <h3>👉 /watch_store/create</h3>
 
-[back to Endpoints](#1---endpoints)
+[back to Endpoints](#1-endpoints)
 
 <h3>Request information</h3>
 

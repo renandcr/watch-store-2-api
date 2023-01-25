@@ -67,7 +67,9 @@ const changePurchaseUnitsService = async (
 
     customer.cart.shipping = customer.cart.shipping;
 
-    const numberOfInstallments = Number(customer.cart.installment.split("")[3]);
+    const numberOfInstallments = Number(
+      customer.cart.installment.split(" ")[1].replace("x", "")
+    );
     const installmentValue =
       (customer.cart.shipping + customer.cart.amount) / numberOfInstallments;
 

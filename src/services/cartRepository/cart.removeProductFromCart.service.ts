@@ -54,7 +54,9 @@ const removeProductFromCartService = async (
     cart!.installment = "Em 1x de 0 sem juros";
   } else {
     cart!.shipping = cart!.shipping;
-    numberOfInstallments = Number(cart!.installment.split("")[3]);
+    numberOfInstallments = Number(
+      cart!.installment.split(" ")[1].replace("x", "")
+    );
     installmentValue = (cart!.shipping + cart!.amount) / numberOfInstallments;
     cart!.installment = `Em ${numberOfInstallments}x de ${formatPrices(
       installmentValue
