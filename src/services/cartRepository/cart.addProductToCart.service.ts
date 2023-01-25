@@ -54,7 +54,9 @@ const addProductToCartService = async (data: ICart): Promise<void> => {
 
   customer.cart.shipping = 28.9;
 
-  const numberOfInstallments = Number(customer.cart.installment.split("")[3]);
+  const numberOfInstallments = Number(
+    customer.cart.installment.split(" ")[1].replace("x", "")
+  );
   const installmentValue =
     (customer.cart.shipping + customer.cart.amount) / numberOfInstallments;
 
